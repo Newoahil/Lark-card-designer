@@ -1,0 +1,73 @@
+# Rendering Constraints
+
+Use this file to keep designs compatible with Feishu/Lark card realities. It is a design constraint file, not an API manual.
+
+## Basis
+
+- Default to Feishu card JSON 2.0-style structure for new designs.
+- Use JSON skeletons only to show hierarchy and component intent.
+- Do not claim skeletons are production-sendable.
+- Mention JSON 1.0 only when reviewing older cards or compatibility.
+- Use CardKit concepts when the design needs card entity lifecycle, partial update, streaming text updates, template variables, or reusable card content.
+
+## JSON Skeleton Boundary
+
+A skeleton may include:
+
+- `config` placeholders
+- `header` with title and status color intent
+- `elements` showing markdown, column set, table, chart, buttons, notes, or collapsible sections
+- comments or placeholder values explaining intent
+
+A skeleton must not include:
+
+- credentials, tokens, webhook URLs, app IDs, secrets
+- complete send-message envelope
+- callback handler implementation
+- production validation guarantees
+- generated business IDs pretending to be real
+
+Always label skeletons: "Structure sketch only, not production-sendable Feishu JSON."
+
+## Markdown And Rich Text
+
+- Use Markdown/rich text for conclusions, short descriptions, and grouped bullets.
+- Avoid Markdown pipe tables for structured data; prefer native table.
+- Keep paragraphs short. Long explanations should be folded or linked.
+- Use links for details that do not need to be read inside the card.
+
+## Tables
+
+- Prefer native table for rows/columns.
+- Bound the first-screen row count.
+- Include units, period, sorting, and status fields.
+- Split very wide tables by priority or link to the source table.
+
+## Charts
+
+- Recommend chart type and intent, not full chart JSON by default.
+- Explain why chart beats KPI/table for this case.
+- Avoid decorative charts without a decision question.
+
+## Images And Media
+
+- Use image components only when visual recognition matters.
+- Do not rely on images for critical text.
+- Note that implementation may need image upload or an `image_key`.
+
+## Interactions
+
+- Buttons should map to explicit user intent: approve, reject, return, view, refresh, feedback.
+- Select/input/form components are for parameters, not decoration.
+- For approval and destructive actions, specify confirmation and post-action lock state.
+- For feedback loops, define how feedback changes future triage, even if implementation is out of scope.
+
+## Long Content
+
+- First screen should answer the user's question.
+- Fold raw data, logs, appendices, old history, and extended evidence.
+- If content exceeds a single readable card, recommend splitting into summary card plus detail card or link.
+
+## Official Docs
+
+When exact syntax or field constraints matter, consult `docs/INDEX.md` and the matching raw official document. Default design work should not load all raw docs.
