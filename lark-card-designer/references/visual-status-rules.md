@@ -18,8 +18,19 @@ Use only one dominant status color per card header. Use tags for secondary statu
 
 - Emphasize the answer, not every interesting number.
 - Use emphasis color on header, key number, risk tag, or primary action area.
+- Use inline text color only for short semantic fragments such as status words, risk words, metric deltas, and approval results.
 - Use bold text for labels or conclusions sparingly.
 - If every row is highlighted, nothing is highlighted.
+
+## Inline Text Color Rules
+
+- Use inline color when a local phrase needs semantic emphasis without creating a new component.
+- Good targets: `+12%`, `-18%`, `待审批`, `已拒绝`, `库存断货`, `高风险`.
+- Do not color entire paragraphs or long explanations.
+- Do not rely on color alone; pair color with clear text or a tag.
+- Do not attempt to override link text color.
+- Prefer Feishu color enums. Use RGBA custom colors only for documented brand or accessibility needs.
+- If many fragments need color in one module, switch to tags, table status columns, or a clearer structure.
 
 ## Data-Driven Design Strategies
 

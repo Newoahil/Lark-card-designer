@@ -35,6 +35,19 @@ Always label skeletons: "Structure sketch only, not production-sendable Feishu J
 - Avoid Markdown pipe tables for structured data; prefer native table.
 - Keep paragraphs short. Long explanations should be folded or linked.
 - Use links for details that do not need to be read inside the card.
+- For inline colored text, use rich text or `lark_md` color syntax only for short semantic fragments.
+- For whole plain text elements, use `text_color` only when the entire element has one semantic state.
+- Use `text_tag` or table option tags when the colored content is a status/category, not prose.
+- Link text color should follow platform behavior; do not design custom link colors.
+
+## Color Implementation Notes
+
+- Feishu card color fields support official color enums; some fields also support configured RGBA custom colors.
+- Rich text / Markdown can express inline colored text with font color syntax.
+- Plain text components can use `text_color` when `tag` is `plain_text`.
+- Table columns can carry status through option tags or markdown-capable data types.
+- Icons can carry color, but icon color should reinforce state instead of adding decoration.
+- Custom RGBA colors require style configuration and should be treated as implementation detail, not default design output.
 
 ## Tables
 
