@@ -44,6 +44,7 @@ Choose components from the data shape and reader action. Avoid component variety
 - Destructive or irreversible actions need confirmation copy.
 - Disable, hide, or replace buttons after the state changes.
 - Make button text action-oriented, for example "批准", "退回修改", "查看详情".
+- For button layout, loading/disabled/final states, input fields, selects, and form layout, use `interaction-parameters.md`.
 
 ## Collapsible Rules
 

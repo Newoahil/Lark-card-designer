@@ -1,6 +1,6 @@
 ---
 name: lark-card-designer
-description: "Feishu/Lark card style and information-architecture designer for development workflows. Use when a coding agent needs to design, choose, or review Feishu/Lark card structure, data presentation, component choices, atomic design parameters, restrained visual/status rules, optional inline text color, tags, typography, spacing, interaction states, JSON 2.0-style skeletons, approval cards, reports, product or sales data cards, daily or weekly reports, retrospectives, article/news digests, or CardKit-aware card behavior. This skill guides design decisions and reviews; it does not send cards, call Feishu APIs, generate production-ready JSON, or modify implementation files."
+description: "Feishu/Lark card style and information-architecture designer for development workflows. Use when a coding agent needs to design, choose, or review Feishu/Lark card structure, data presentation, component choices, atomic design parameters, restrained visual/status rules, optional inline text color, tags, typography, spacing, button layout, input fields, selects, form layout, interaction states, JSON 2.0-style skeletons, approval cards, reports, product or sales data cards, daily or weekly reports, retrospectives, article/news digests, or CardKit-aware card behavior. This skill guides design decisions and reviews; it does not send cards, call Feishu APIs, generate production-ready JSON, or modify implementation files."
 ---
 
 # Lark Card Designer
@@ -21,7 +21,7 @@ Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Mark
 4. Select components for clarity, not decoration. Prefer structured Feishu components for structured data.
 5. Attach restrained visual/status rules. Default to Feishu/Lark native neutral styling. Use color only when it carries status, risk, priority, hierarchy, or action focus.
 6. Add atomic design parameters when the output will guide implementation or review. Keep them scoped to the components actually used.
-7. Add interaction rules only when the reader needs to decide, approve, select, refresh, or give feedback.
+7. Add interaction parameters only when the reader needs to decide, approve, select, input, refresh, filter, or give feedback.
 8. Output a Markdown explanation followed by a stable structured decision block.
 9. Finish with design red lines and a validation checklist.
 
@@ -33,6 +33,7 @@ Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Mark
 - For table, chart, button, form, image, collapsible, note, and footer choices, read [component-rules.md](references/component-rules.md).
 - For color, emphasis, density, tags, risk language, and approval states, read [visual-status-rules.md](references/visual-status-rules.md).
 - For implementation-facing atomic parameters such as inline text color, tags, typography, spacing, table columns, button states, and fallback behavior, read [atomic-design-parameters.md](references/atomic-design-parameters.md).
+- For button layout, input fields, select controls, form layout, validation states, loading states, and post-action card states, read [interaction-parameters.md](references/interaction-parameters.md).
 - For Feishu JSON 2.0-style skeleton boundaries, Markdown rendering, table limits, interaction constraints, and CardKit concepts, read [rendering-constraints.md](references/rendering-constraints.md).
 - When a concrete sample is requested or the output shape is unclear, read [examples.md](references/examples.md).
 - When design evidence from GitHub projects is useful, read [github-project-lessons.md](references/github-project-lessons.md).
@@ -90,6 +91,10 @@ atomic_parameters:
 interaction_rules:
 - primary_action:
 - secondary_actions:
+- button_layout:
+- input_parameters:
+- select_parameters:
+- form_layout:
 - state_changes:
 - audit_or_feedback:
 
@@ -110,7 +115,8 @@ validation_checklist:
 - [ ] tables are bounded or folded
 - [ ] any used status colors carry semantic meaning
 - [ ] inline text color is omitted unless local semantic emphasis is needed
-- [ ] actions and disabled states are clear
+- [ ] actions, button layout, and disabled/loading/final states are clear
+- [ ] input/select/form controls have labels, defaults, validation, and empty/error states when used
 - [ ] source, period, owner, or audit fields are present when needed
 - [ ] mobile reading density is acceptable
 ````

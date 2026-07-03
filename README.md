@@ -20,6 +20,7 @@
 - 区分管理层、业务运营、一线执行、复盘分析、知识/资讯口径
 - 输出信息架构、组件计划、视觉状态、交互状态和校验清单
 - 细化到内联文字色、标签、字号、间距、表格列、按钮状态等原子化施工参数
+- 细化按钮排布、输入框、选择器、表单布局、校验状态和提交后状态
 - 提供接近飞书 JSON 2.0 的结构骨架，但明确不作为生产可发送 JSON
 - 参考 CardKit 的卡片实体、局部更新、流式更新和模板化概念
 - 兼容 Codex、Claude Code、OpenCode 等 coding CLI 的轻量使用方式
@@ -133,6 +134,7 @@ python C:\Users\<you>\.codex\skills\.system\skill-creator\scripts\quick_validate
 - Adapt designs for management, business operations, frontline execution, retrospective analysis, and knowledge/news audiences
 - Produce information architecture, component plans, visual rules, interaction rules, and validation checklists
 - Provide atomic implementation-facing parameters such as inline text color, tags, typography, spacing, table columns, and button states
+- Specify button layout, input fields, selects, form layout, validation states, and post-action states
 - Provide Feishu JSON 2.0-like skeletons while explicitly avoiding production-sendable JSON
 - Reference CardKit concepts such as card entities, partial updates, streaming updates, and templates
 - Work across Codex, Claude Code, OpenCode, and other coding CLI environments

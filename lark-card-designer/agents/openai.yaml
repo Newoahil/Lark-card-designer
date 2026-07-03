@@ -1,4 +1,4 @@
 interface:
   display_name: "Lark Card Designer"
   short_description: "Feishu/Lark card design and review"
-  default_prompt: "Use $lark-card-designer to design or review a Feishu/Lark card for this data, including card pattern, components, atomic design parameters, visual status, interactions, and a JSON 2.0-style skeleton."
+  default_prompt: "Use $lark-card-designer to design or review a Feishu/Lark card for this data, including card pattern, components, atomic design parameters, button/input/select behavior, visual status, interactions, and a JSON 2.0-style skeleton."

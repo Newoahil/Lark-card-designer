@@ -128,3 +128,5 @@ atomic_parameters:
 - buttons: primary=approve, secondary=[reject,return], disabled_after=final_state
 - responsive_behavior: stack secondary fields on mobile; fold raw evidence
 ```
+
+For deeper button, input, select, and form parameters, use `interaction-parameters.md`.
