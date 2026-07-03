@@ -43,6 +43,7 @@ Always label skeletons: "Structure sketch only, not production-sendable Feishu J
 ## Color Implementation Notes
 
 - Feishu card color fields support official color enums; some fields also support configured RGBA custom colors.
+- Do not specify a color field when the design does not need semantic color.
 - Rich text / Markdown can express inline colored text with font color syntax.
 - Plain text components can use `text_color` when `tag` is `plain_text`.
 - Table columns can carry status through option tags or markdown-capable data types.

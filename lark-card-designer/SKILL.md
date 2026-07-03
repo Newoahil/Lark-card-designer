@@ -1,6 +1,6 @@
 ---
 name: lark-card-designer
-description: "Feishu/Lark card style and information-architecture designer for development workflows. Use when a coding agent needs to design, choose, or review Feishu/Lark card structure, data presentation, component choices, atomic design parameters, visual/status rules, inline text color, tags, typography, spacing, interaction states, JSON 2.0-style skeletons, approval cards, reports, product or sales data cards, daily or weekly reports, retrospectives, article/news digests, or CardKit-aware card behavior. This skill guides design decisions and reviews; it does not send cards, call Feishu APIs, generate production-ready JSON, or modify implementation files."
+description: "Feishu/Lark card style and information-architecture designer for development workflows. Use when a coding agent needs to design, choose, or review Feishu/Lark card structure, data presentation, component choices, atomic design parameters, restrained visual/status rules, optional inline text color, tags, typography, spacing, interaction states, JSON 2.0-style skeletons, approval cards, reports, product or sales data cards, daily or weekly reports, retrospectives, article/news digests, or CardKit-aware card behavior. This skill guides design decisions and reviews; it does not send cards, call Feishu APIs, generate production-ready JSON, or modify implementation files."
 ---
 
 # Lark Card Designer
@@ -19,7 +19,7 @@ Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Mark
 2. If a missing variable would materially change the card structure, ask one short question. Otherwise infer the most likely audience and state the assumption.
 3. Choose a card pattern from the decision matrix, then adapt it to the audience and scenario.
 4. Select components for clarity, not decoration. Prefer structured Feishu components for structured data.
-5. Attach visual/status rules. Header color, inline color, tags, typography, spacing, and emphasis must express status, risk, priority, hierarchy, or action focus.
+5. Attach restrained visual/status rules. Default to Feishu/Lark native neutral styling. Use color only when it carries status, risk, priority, hierarchy, or action focus.
 6. Add atomic design parameters when the output will guide implementation or review. Keep them scoped to the components actually used.
 7. Add interaction rules only when the reader needs to decide, approve, select, refresh, or give feedback.
 8. Output a Markdown explanation followed by a stable structured decision block.
@@ -71,6 +71,7 @@ component_plan:
 - metadata:
 
 visual_rules:
+- color_policy:
 - status_color:
 - inline_text_color:
 - emphasis:
@@ -107,8 +108,8 @@ validation_checklist:
 - [ ] first screen states the point
 - [ ] component choice matches the data shape
 - [ ] tables are bounded or folded
-- [ ] status colors carry semantic meaning
-- [ ] inline text color is used only for local semantic emphasis
+- [ ] any used status colors carry semantic meaning
+- [ ] inline text color is omitted unless local semantic emphasis is needed
 - [ ] actions and disabled states are clear
 - [ ] source, period, owner, or audit fields are present when needed
 - [ ] mobile reading density is acceptable
@@ -123,6 +124,8 @@ For review of an existing card, lead with design red lines, risks, and improveme
 - Do not sacrifice "Information Order" or "Context Integrity" for "Simplicity". If data is too wide for mobile, pivot to vertical stacking instead of deleting columns.
 - Do not use emojis in Agent, technical, or professional approval contexts.
 - Do not use color as decoration without semantic status.
+- Do not use color just because a color field exists in the output shape.
+- Do not use more than one dominant color family unless the data contains multiple independent statuses that must be compared.
 - Do not color full paragraphs when a tag, key number, or short status phrase would carry the emphasis better.
 - Do not hide the required action behind long explanation.
 - Do not omit period, unit, source, owner, or audit fields when the data depends on them.

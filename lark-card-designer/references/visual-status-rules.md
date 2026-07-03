@@ -2,6 +2,22 @@
 
 Visual design should make state and hierarchy easier to scan. It should not add decoration that competes with meaning.
 
+## Default Visual Mode
+
+- Default to Feishu/Lark native neutral styling.
+- Color is optional, not required.
+- Use color only when it improves recognition of status, risk, priority, trend, or action.
+- If the card is informational and has no meaningful state, use no dominant color beyond the platform default.
+- Prefer hierarchy, spacing, labels, and component choice before adding more colors.
+
+## Color Budget
+
+- Use at most one dominant color family in the card header.
+- Use at most one secondary semantic color in the first screen.
+- Use inline text color sparingly: usually 0 to 3 short fragments per card.
+- Use tags instead of colored prose when multiple statuses must be scanned.
+- Avoid combining colored header, colored tags, colored inline text, colored icons, and colored backgrounds in the same small card.
+
 ## Status Color Semantics
 
 | State | Suggested color | Use for |
@@ -12,7 +28,7 @@ Visual design should make state and hierarchy easier to scan. It should not add 
 | Informational, running, analysis, neutral notice | Blue or cyan | In-progress task, normal report, informational digest |
 | Historical, archived, disabled, secondary | Gray | Closed item, audit history, disabled button, appendix |
 
-Use only one dominant status color per card header. Use tags for secondary statuses.
+Use only one dominant status color per card header. Use tags for secondary statuses. If there is no clear state, use the default neutral header.
 
 ## Emphasis Rules
 
@@ -31,6 +47,7 @@ Use only one dominant status color per card header. Use tags for secondary statu
 - Do not attempt to override link text color.
 - Prefer Feishu color enums. Use RGBA custom colors only for documented brand or accessibility needs.
 - If many fragments need color in one module, switch to tags, table status columns, or a clearer structure.
+- If the card already has a colored header and colored tags, avoid inline text color unless the fragment is critical.
 
 ## Data-Driven Design Strategies
 

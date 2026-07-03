@@ -14,6 +14,17 @@ Use this file when the output needs to guide implementation choices, not only hi
 | Metadata | period, source, update time, owner, audit trail, confidence | data needs trust, traceability, or compliance |
 | Responsive | desktop/mobile priority, vertical stacking, folded details | content may be wide or dense |
 
+## Color Policy
+
+Start from neutral. Add color only when a specific semantic job exists.
+
+- `none`: choose when the card is informational, archival, or already clear through structure.
+- `header_only`: choose when the whole card has one status, such as pending approval, failed, recovered, or completed.
+- `tags_only`: choose when rows or items have multiple statuses.
+- `inline_only`: choose when 1 to 3 short fragments need local emphasis.
+- `header_plus_tags`: choose for operational dashboards with one overall status and several row/item statuses.
+- Avoid `header_plus_tags_plus_inline` unless there is a strong reason; it often becomes visually loud.
+
 ## Inline Text Color
 
 Use inline color as micro-emphasis, not as a layout system.
@@ -24,6 +35,7 @@ Use inline color as micro-emphasis, not as a layout system.
 - Do not color full paragraphs. Use tags, key numbers, or section status instead.
 - Do not attempt to customize link text color; links should keep platform behavior.
 - Prefer Feishu color enums for consistency. Use RGBA custom colors only when brand or accessibility requirements justify it.
+- Omit inline color when bold text, a tag, or the surrounding sentence is sufficient.
 
 Implementation-facing hints:
 
@@ -108,8 +120,9 @@ When useful, add this compact block:
 ```markdown
 atomic_parameters:
 - typography: title=plain_text/heading, body=normal, metadata=notation
-- color_tokens: header=orange, inline_delta=red, tag_risk=red
-- inline_text_color: only color status words and metric deltas; no full-paragraph coloring
+- color_policy: header_plus_tags
+- color_tokens: header=orange, tag_risk=red
+- inline_text_color: omit unless a short delta/status fragment is critical
 - tags: risk=red, pending=orange, archive=neutral
 - table_columns: visible=[name,status,delta,owner], folded=[id,raw_update_time]
 - buttons: primary=approve, secondary=[reject,return], disabled_after=final_state
