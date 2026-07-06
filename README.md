@@ -18,6 +18,7 @@
 
 - 根据 `数据类型 + 数据意图 + 输出口径` 选择卡片模式
 - 区分管理层、业务运营、一线执行、复盘分析、知识/资讯口径
+- 根据数据类型判断必须展示的关键字段、首屏优先级、折叠字段和可读性控制
 - 输出信息架构、组件计划、视觉状态、交互状态和校验清单
 - 细化到内联文字色、标签、字号、间距、表格列、按钮状态等原子化施工参数
 - 细化按钮排布、输入框、选择器、表单布局、校验状态和提交后状态
@@ -132,6 +133,7 @@ python C:\Users\<you>\.codex\skills\.system\skill-creator\scripts\quick_validate
 
 - Select card patterns from `data type + data intent + audience`
 - Adapt designs for management, business operations, frontline execution, retrospective analysis, and knowledge/news audiences
+- Identify must-show key fields, first-screen priority, folded fields, and readability controls by data type
 - Produce information architecture, component plans, visual rules, interaction rules, and validation checklists
 - Provide atomic implementation-facing parameters such as inline text color, tags, typography, spacing, table columns, and button states
 - Specify button layout, input fields, selects, form layout, validation states, and post-action states

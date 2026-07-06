@@ -1,11 +1,11 @@
 ---
 name: lark-card-designer
-description: "Feishu/Lark card style and information-architecture designer for development workflows. Use when a coding agent needs to design, choose, or review Feishu/Lark card structure, data presentation, component choices, atomic design parameters, restrained visual/status rules, optional inline text color, tags, typography, spacing, button layout, input fields, selects, form layout, interaction states, JSON 2.0-style skeletons, approval cards, reports, product or sales data cards, daily or weekly reports, retrospectives, article/news digests, or CardKit-aware card behavior. This skill guides design decisions and reviews; it does not send cards, call Feishu APIs, generate production-ready JSON, or modify implementation files."
+description: "Feishu/Lark card style and information-architecture designer for development workflows. Use when a coding agent needs to design, choose, or review Feishu/Lark card structure, data presentation, key data selection, readability, component choices, atomic design parameters, restrained visual/status rules, optional inline text color, tags, typography, spacing, button layout, input fields, selects, form layout, interaction states, JSON 2.0-style skeletons, approval cards, reports, product or sales data cards, daily or weekly reports, retrospectives, article/news digests, or CardKit-aware card behavior. This skill guides design decisions and reviews; it does not send cards, call Feishu APIs, generate production-ready JSON, or modify implementation files."
 ---
 
 # Lark Card Designer
 
-Act as a Feishu/Lark card designer. Decide the card style, information hierarchy, component mix, atomic design parameters, visual/status language, interaction states, and validation checklist for a given data type, data intent, and output audience.
+Act as a Feishu/Lark card designer. Decide the card style, key data, readability strategy, information hierarchy, component mix, atomic design parameters, visual/status language, interaction states, and validation checklist for a given data type, data intent, and output audience.
 
 Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Markdown beautifier, or production JSON generator. JSON output is only a structure skeleton close to Feishu card JSON 2.0, not a sendable artifact.
 
@@ -18,17 +18,19 @@ Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Mark
    - constraints: interaction, approval, chart, table, mobile reading, multilingual, long content, source/audit/update time
 2. If a missing variable would materially change the card structure, ask one short question. Otherwise infer the most likely audience and state the assumption.
 3. Choose a card pattern from the decision matrix, then adapt it to the audience and scenario.
-4. Select components for clarity, not decoration. Prefer structured Feishu components for structured data.
-5. Attach restrained visual/status rules. Default to Feishu/Lark native neutral styling. Use color only when it carries status, risk, priority, hierarchy, or action focus.
-6. Add atomic design parameters when the output will guide implementation or review. Keep them scoped to the components actually used.
-7. Add interaction parameters only when the reader needs to decide, approve, select, input, refresh, filter, or give feedback.
-8. Output a Markdown explanation followed by a stable structured decision block.
-9. Finish with design red lines and a validation checklist.
+4. Select key data and readability controls before choosing decorative or secondary details.
+5. Select components for clarity, not decoration. Prefer structured Feishu components for structured data.
+6. Attach restrained visual/status rules. Default to Feishu/Lark native neutral styling. Use color only when it carries status, risk, priority, hierarchy, or action focus.
+7. Add atomic design parameters when the output will guide implementation or review. Keep them scoped to the components actually used.
+8. Add interaction parameters only when the reader needs to decide, approve, select, input, refresh, filter, or give feedback.
+9. Output a Markdown explanation followed by a stable structured decision block.
+10. Finish with design red lines and a validation checklist.
 
 ## Reference Routing
 
 - For pattern selection, read [decision-matrix.md](references/decision-matrix.md).
 - For audience differences, read [audience-portfolios.md](references/audience-portfolios.md).
+- For key data selection, first-screen priority, field folding, and readability controls by data type, read [key-data-readability-rules.md](references/key-data-readability-rules.md).
 - For daily/weekly reports, product data, sales data, digests, approvals, and retrospectives, read [card-patterns.md](references/card-patterns.md).
 - For table, chart, button, form, image, collapsible, note, and footer choices, read [component-rules.md](references/component-rules.md).
 - For color, emphasis, density, tags, risk language, and approval states, read [visual-status-rules.md](references/visual-status-rules.md).
@@ -63,6 +65,13 @@ information_architecture:
 - body:
 - details:
 - footer_or_note:
+
+key_data_rules:
+- must_show:
+- first_screen_priority:
+- folded_or_linked:
+- readability_controls:
+- missing_data_questions:
 
 component_plan:
 - header:
@@ -111,6 +120,8 @@ json_skeleton:
 
 validation_checklist:
 - [ ] first screen states the point
+- [ ] required key data for this data type is visible
+- [ ] key numbers include period, unit, and baseline when needed
 - [ ] component choice matches the data shape
 - [ ] tables are bounded or folded
 - [ ] any used status colors carry semantic meaning
