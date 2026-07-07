@@ -120,6 +120,9 @@ json_skeleton:
 }
 ```
 
+design_red_lines:
+- scenario_specific_failure_modes:
+
 validation_checklist:
 - [ ] first screen states the point
 - [ ] required key data for this data type is visible

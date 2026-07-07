@@ -26,6 +26,7 @@ For each case, compare the output against expected pattern, key data, component 
 5. Check that `visual_rules.color_policy` starts neutral and adds color only for status, risk, priority, trend, or action focus.
 6. Check that action cards include button layout, disabled/loading/final states, and audit feedback.
 7. Check that the JSON skeleton is labeled as a structure sketch only, not production-sendable Feishu JSON.
+8. Check that `design_red_lines` names the main failure modes for this scenario, not generic advice only.
 
 ## Common Regression Signals
 

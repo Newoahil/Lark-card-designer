@@ -91,6 +91,7 @@ visual_rules
 atomic_parameters
 interaction_rules
 json_skeleton
+design_red_lines
 validation_checklist
 ```
 
@@ -184,6 +185,7 @@ visual_rules
 atomic_parameters
 interaction_rules
 json_skeleton
+design_red_lines
 validation_checklist
 ```
 
