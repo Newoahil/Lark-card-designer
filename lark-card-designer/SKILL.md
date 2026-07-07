@@ -38,6 +38,8 @@ Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Mark
 - For button layout, input fields, select controls, form layout, validation states, loading states, and post-action card states, read [interaction-parameters.md](references/interaction-parameters.md).
 - For Feishu JSON 2.0-style skeleton boundaries, Markdown rendering, table limits, interaction constraints, and CardKit concepts, read [rendering-constraints.md](references/rendering-constraints.md).
 - When a concrete sample is requested or the output shape is unclear, read [examples.md](references/examples.md).
+- When implementers need a more concrete per-pattern structure sketch, read [pattern-skeletons.md](references/pattern-skeletons.md).
+- When validating this skill's behavior or checking whether an output matches expected design decisions, read [evaluation-cases.md](references/evaluation-cases.md).
 - When design evidence from GitHub projects is useful, read [github-project-lessons.md](references/github-project-lessons.md).
 
 Use the raw official documents in `docs/` only when exact Feishu/Lark field behavior is needed. Do not load `docs/` by default.

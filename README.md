@@ -85,8 +85,10 @@ skill 默认输出 Markdown 说明和结构化决策块：
 card_intent
 card_pattern
 information_architecture
+key_data_rules
 component_plan
 visual_rules
+atomic_parameters
 interaction_rules
 json_skeleton
 validation_checklist
@@ -176,8 +178,10 @@ The skill returns Markdown plus a structured decision block:
 card_intent
 card_pattern
 information_architecture
+key_data_rules
 component_plan
 visual_rules
+atomic_parameters
 interaction_rules
 json_skeleton
 validation_checklist
