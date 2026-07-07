@@ -5,29 +5,30 @@ Use this file to keep designs compatible with Feishu/Lark card realities. It is 
 ## Basis
 
 - Default to Feishu card JSON 2.0-style structure for new designs.
-- Use JSON skeletons only to show hierarchy and component intent.
-- Do not claim skeletons are production-sendable.
+- Use structure sketches only to show hierarchy and component intent.
+- Do not claim structure sketches are production-sendable or implementation-ready.
 - Mention JSON 1.0 only when reviewing older cards or compatibility.
 - Use CardKit concepts when the design needs card entity lifecycle, partial update, streaming text updates, template variables, or reusable card content.
 
-## JSON Skeleton Boundary
+## Structure Sketch Boundary
 
-A skeleton may include:
+A structure sketch may include:
 
 - `config` placeholders
 - `header` with title and status color intent
 - `elements` showing markdown, column set, table, chart, buttons, notes, or collapsible sections
 - comments or placeholder values explaining intent
 
-A skeleton must not include:
+A structure sketch must not include:
 
 - credentials, tokens, webhook URLs, app IDs, secrets
 - complete send-message envelope
 - callback handler implementation
 - production validation guarantees
+- field-level implementation schemas
 - generated business IDs pretending to be real
 
-Always label skeletons: "Structure sketch only, not production-sendable Feishu JSON."
+Always label sketches: "Design handoff sketch only, not production-sendable Feishu JSON."
 
 ## Markdown And Rich Text
 
@@ -67,7 +68,7 @@ Always label skeletons: "Structure sketch only, not production-sendable Feishu J
 
 - Use image components only when visual recognition matters.
 - Do not rely on images for critical text.
-- Note that implementation may need image upload or an `image_key`.
+- Note that downstream delivery may need image upload or an `image_key`.
 
 ## Interactions
 

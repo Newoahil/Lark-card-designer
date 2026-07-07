@@ -1,8 +1,8 @@
-# Pattern Skeletons
+# Pattern Structure Sketches
 
-Use this file when an implementer needs a more concrete structure sketch than the default skeleton. These are design skeletons only. Do not treat them as production-sendable Feishu JSON.
+Use this file when design handoff needs a more concrete structure sketch than the default output. These are design sketches only. Do not treat them as production-sendable Feishu JSON, field-level schemas, or implementation templates.
 
-Keep skeletons small. Show hierarchy, component intent, and field placement; avoid full API envelopes, credentials, callbacks, or complete component schemas.
+Keep sketches small. Show hierarchy, component intent, and field placement; avoid full API envelopes, credentials, callbacks, or complete component schemas.
 
 ## Contents
 
@@ -20,7 +20,7 @@ Use for management reporting, business health, decision summaries, and high-leve
 
 ```json
 {
-  "note": "Structure sketch only, not production-sendable Feishu JSON.",
+  "note": "Design handoff sketch only, not production-sendable Feishu JSON.",
   "schema": "json_2_0_like",
   "header": {
     "title": "period + scope + conclusion",
@@ -42,7 +42,7 @@ Use for daily/weekly operations, product operations, sales operations, anomalies
 
 ```json
 {
-  "note": "Structure sketch only, not production-sendable Feishu JSON.",
+  "note": "Design handoff sketch only, not production-sendable Feishu JSON.",
   "schema": "json_2_0_like",
   "header": {
     "title": "period + scope + health/status",
@@ -69,7 +69,7 @@ Use for blog, article, research, industry news, and knowledge aggregation.
 
 ```json
 {
-  "note": "Structure sketch only, not production-sendable Feishu JSON.",
+  "note": "Design handoff sketch only, not production-sendable Feishu JSON.",
   "schema": "json_2_0_like",
   "header": {
     "title": "topic + collection period",
@@ -91,7 +91,7 @@ Use for approvals, confirmations, parameterized execution, permission changes, p
 
 ```json
 {
-  "note": "Structure sketch only, not production-sendable Feishu JSON.",
+  "note": "Design handoff sketch only, not production-sendable Feishu JSON.",
   "schema": "json_2_0_like",
   "header": {
     "title": "approval object + current state",
@@ -117,7 +117,7 @@ Use for retrospectives, root-cause analysis, evidence-backed diagnosis, and camp
 
 ```json
 {
-  "note": "Structure sketch only, not production-sendable Feishu JSON.",
+  "note": "Design handoff sketch only, not production-sendable Feishu JSON.",
   "schema": "json_2_0_like",
   "header": {
     "title": "topic + result state",
@@ -140,7 +140,7 @@ Use for incidents, warnings, short abnormal notifications, and single-status upd
 
 ```json
 {
-  "note": "Structure sketch only, not production-sendable Feishu JSON.",
+  "note": "Design handoff sketch only, not production-sendable Feishu JSON.",
   "schema": "json_2_0_like",
   "header": {
     "title": "severity + impacted object",
@@ -163,7 +163,7 @@ Use for long-running tasks, streaming updates, and process tracking.
 
 ```json
 {
-  "note": "Structure sketch only, not production-sendable Feishu JSON.",
+  "note": "Design handoff sketch only, not production-sendable Feishu JSON.",
   "schema": "json_2_0_like",
   "header": {
     "title": "task + current state",

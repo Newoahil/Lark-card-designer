@@ -2,7 +2,7 @@
 
 中文 | [English](#english)
 
-`Lark Card Designer` 是一个面向 AI coding CLI 的飞书/Lark 卡片设计 skill。它不负责发送卡片、调用飞书 API 或生成生产可发送 JSON，而是根据数据类型、数据意图和输出口径，稳定给出卡片样式、信息架构、组件组合、视觉状态、交互规则和 JSON 2.0 风格骨架。
+`Lark Card Designer` 是一个面向 AI coding CLI 的飞书/Lark 卡片设计 skill。它不负责发送卡片、调用飞书 API、修改实现文件或生成生产可发送 JSON，而是根据数据类型、数据意图和输出口径，稳定给出卡片样式、信息架构、组件组合、视觉状态、交互规则和非生产结构草图。
 
 ## 适用场景
 
@@ -20,9 +20,9 @@
 - 区分管理层、业务运营、一线执行、复盘分析、知识/资讯口径
 - 根据数据类型判断必须展示的关键字段、首屏优先级、折叠字段和可读性控制
 - 输出信息架构、组件计划、视觉状态、交互状态和校验清单
-- 细化到内联文字色、标签、字号、间距、表格列、按钮状态等原子化施工参数
+- 细化到内联文字色、标签、字号、间距、表格列、按钮状态等设计约束
 - 细化按钮排布、输入框、选择器、表单布局、校验状态和提交后状态
-- 提供接近飞书 JSON 2.0 的结构骨架，但明确不作为生产可发送 JSON
+- 提供非生产结构草图，用于设计交付，不作为字段级实现 schema 或生产可发送 JSON
 - 参考 CardKit 的卡片实体、局部更新、流式更新和模板化概念
 - 兼容 Codex、Claude Code、OpenCode 等 coding CLI 的轻量使用方式
 
@@ -88,9 +88,9 @@ information_architecture
 key_data_rules
 component_plan
 visual_rules
-atomic_parameters
+design_constraints
 interaction_rules
-json_skeleton
+structure_sketch
 design_red_lines
 validation_checklist
 ```
@@ -104,9 +104,11 @@ validation_checklist
 - 卡片模板市场
 - API 调用封装
 - 生产可发送 JSON 生成器
+- 字段级 schema 或回调契约生成器
+- 业务代码/卡片模板修改器
 - 通用 Markdown 美化器
 
-它的角色是飞书/Lark 卡片设计师，负责设计判断和评审。
+它的角色是飞书/Lark 卡片设计师，负责设计判断、设计交付约束和评审，不直接施工。
 
 ## 验证
 
@@ -120,7 +122,7 @@ python C:\Users\<you>\.codex\skills\.system\skill-creator\scripts\quick_validate
 
 ## English
 
-`Lark Card Designer` is a Feishu/Lark card design skill for AI coding CLIs. It does not send cards, call Feishu APIs, or generate production-ready JSON. Instead, it chooses card styles, information architecture, component plans, visual/status rules, interaction states, and JSON 2.0-style skeletons from the data type, data intent, and target audience.
+`Lark Card Designer` is a Feishu/Lark card design skill for AI coding CLIs. It does not send cards, call Feishu APIs, modify implementation files, or generate production-ready JSON. Instead, it chooses card styles, information architecture, component plans, visual/status rules, interaction states, and non-production structure sketches from the data type, data intent, and target audience.
 
 ## Use Cases
 
@@ -138,9 +140,9 @@ python C:\Users\<you>\.codex\skills\.system\skill-creator\scripts\quick_validate
 - Adapt designs for management, business operations, frontline execution, retrospective analysis, and knowledge/news audiences
 - Identify must-show key fields, first-screen priority, folded fields, and readability controls by data type
 - Produce information architecture, component plans, visual rules, interaction rules, and validation checklists
-- Provide atomic implementation-facing parameters such as inline text color, tags, typography, spacing, table columns, and button states
+- Provide design constraints such as inline text color, tags, typography, spacing, table columns, and button states
 - Specify button layout, input fields, selects, form layout, validation states, and post-action states
-- Provide Feishu JSON 2.0-like skeletons while explicitly avoiding production-sendable JSON
+- Provide non-production structure sketches for design handoff while explicitly avoiding field-level schemas or production-sendable JSON
 - Reference CardKit concepts such as card entities, partial updates, streaming updates, and templates
 - Work across Codex, Claude Code, OpenCode, and other coding CLI environments
 
@@ -182,13 +184,13 @@ information_architecture
 key_data_rules
 component_plan
 visual_rules
-atomic_parameters
+design_constraints
 interaction_rules
-json_skeleton
+structure_sketch
 design_red_lines
 validation_checklist
 ```
 
 ## Non-Goals
 
-This project is not a Feishu card SDK, webhook sender, API wrapper, production JSON generator, template marketplace, or generic Markdown formatter. Its role is design guidance and review.
+This project is not a Feishu card SDK, webhook sender, API wrapper, production JSON generator, field-level schema generator, callback contract generator, implementation modifier, template marketplace, or generic Markdown formatter. Its role is design guidance, design handoff constraints, and review.

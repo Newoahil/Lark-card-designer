@@ -66,7 +66,7 @@ Specify inputs only when free-form user text is genuinely needed.
 | --- | --- |
 | `field_name` | Stable semantic field, such as `reject_reason`, `comment`, `budget_note` |
 | `label` | User-facing label; short and specific |
-| `field_type` | text, multiline text, number-like text, URL-like text, or implementation-specific input |
+| `field_type` | text, multiline text, number-like text, URL-like text, or platform-specific input |
 | `required` | Required only when backend/process truly needs it |
 | `placeholder` | Show content format, not instructions already visible elsewhere |
 | `default_value` | Use only when safe and reversible |

@@ -1,10 +1,10 @@
-# Atomic Design Parameters
+# Atomic Design Constraints
 
-Use this file when the output needs to guide implementation choices, not only high-level card style. Keep parameters scoped to the components used in the proposed card.
+Use this file when the output needs design handoff constraints, not only high-level card style. Keep constraints scoped to the components used in the proposed card.
 
-## Parameter Layers
+## Constraint Layers
 
-| Layer | Parameters | Use when |
+| Layer | Constraints | Use when |
 | --- | --- | --- |
 | Typography | text size, text weight, text alignment, line count | hierarchy or mobile readability matters |
 | Color | header template, inline text color, tag color, icon color, border/background color | status, risk, trend, or priority needs visual encoding |
@@ -37,7 +37,7 @@ Use inline color as micro-emphasis, not as a layout system.
 - Prefer Feishu color enums for consistency. Use RGBA custom colors only when brand or accessibility requirements justify it.
 - Omit inline color when bold text, a tag, or the surrounding sentence is sufficient.
 
-Implementation-facing hints:
+Design handoff hints:
 
 - Rich text / markdown: use inline font color syntax for short fragments.
 - Plain text component: use `text_color` when the whole text element has one semantic state.
@@ -78,9 +78,9 @@ Use tags for compact classification.
 - Use collapsible boundaries for raw evidence, old history, logs, and long rows.
 - If the first screen feels crowded, reduce competing modules before reducing required context.
 
-## Table Parameters
+## Table Constraints
 
-Specify table parameters when rows are central:
+Specify table constraints when rows are central:
 
 - primary_key: row identity such as SKU, customer, approval ID, article title
 - visible_columns: columns shown on first screen
@@ -92,7 +92,7 @@ Specify table parameters when rows are central:
 
 Avoid deleting context just to fit width. Prefer vertical stacking, folded columns, or links to source.
 
-## Button And State Parameters
+## Button And State Constraints
 
 Specify these for action cards:
 
@@ -101,9 +101,9 @@ Specify these for action cards:
 - destructive_action: action that requires confirmation
 - disabled_state: how the button changes after completion, expiry, or rejection
 - confirmation_copy: short copy for irreversible or high-risk actions
-- callback_payload_hint: semantic payload fields only, not implementation code
+- callback_payload_hint: semantic intent fields only; do not specify implementation code or callback schema
 
-## Fallback Parameters
+## Fallback Constraints
 
 Specify fallback behavior when the chosen component may not render well everywhere:
 
@@ -113,12 +113,12 @@ Specify fallback behavior when the chosen component may not render well everywhe
 - missing_media_fallback: show text title and source link
 - stale_data_fallback: show update time and refresh action
 
-## Atomic Parameter Output Shape
+## Design Constraint Output Shape
 
 When useful, add this compact block:
 
 ```markdown
-atomic_parameters:
+design_constraints:
 - typography: title=plain_text/heading, body=normal, metadata=notation
 - color_policy: header_plus_tags
 - color_tokens: header=orange, tag_risk=red
@@ -129,4 +129,4 @@ atomic_parameters:
 - responsive_behavior: stack secondary fields on mobile; fold raw evidence
 ```
 
-For deeper button, input, select, and form parameters, use `interaction-parameters.md`.
+For deeper button, input, select, and form constraints, use `interaction-parameters.md`.

@@ -1,13 +1,13 @@
 ---
 name: lark-card-designer
-description: "Feishu/Lark card style and information-architecture designer for development workflows. Use when a coding agent needs to design, choose, or review Feishu/Lark card structure, data presentation, key data selection, readability, component choices, atomic design parameters, restrained visual/status rules, optional inline text color, tags, typography, spacing, button layout, input fields, selects, form layout, interaction states, JSON 2.0-style skeletons, approval cards, reports, product or sales data cards, daily or weekly reports, retrospectives, article/news digests, or CardKit-aware card behavior. This skill guides design decisions and reviews; it does not send cards, call Feishu APIs, generate production-ready JSON, or modify implementation files."
+description: "Feishu/Lark card style and information-architecture designer for development workflows. Use when a coding agent needs to design, choose, or review Feishu/Lark card structure, data presentation, key data selection, readability, component choices, atomic design constraints, restrained visual/status rules, optional inline text color, tags, typography, spacing, button layout, input fields, selects, form layout, interaction states, non-production structure sketches, approval cards, reports, product or sales data cards, daily or weekly reports, retrospectives, article/news digests, or CardKit-aware card behavior. This skill guides design decisions and reviews; it does not send cards, call Feishu APIs, generate production-ready JSON, produce field-level implementation schemas, or modify implementation files."
 ---
 
 # Lark Card Designer
 
-Act as a Feishu/Lark card designer. Decide the card style, key data, readability strategy, information hierarchy, component mix, atomic design parameters, visual/status language, interaction states, and validation checklist for a given data type, data intent, and output audience.
+Act as a Feishu/Lark card designer. Decide the card style, key data, readability strategy, information hierarchy, component mix, atomic design constraints, visual/status language, interaction states, and validation checklist for a given data type, data intent, and output audience.
 
-Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Markdown beautifier, or production JSON generator. JSON output is only a structure skeleton close to Feishu card JSON 2.0, not a sendable artifact.
+Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Markdown beautifier, implementation agent, or production JSON generator. Structure sketches are design handoff artifacts only; they may reference Feishu card JSON 2.0 concepts but must not become sendable schemas, callback contracts, or implementation patches.
 
 ## Workflow
 
@@ -21,7 +21,7 @@ Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Mark
 4. Select key data and readability controls before choosing decorative or secondary details.
 5. Select components for clarity, not decoration. Prefer structured Feishu components for structured data.
 6. Attach restrained visual/status rules. Default to Feishu/Lark native neutral styling. Use color only when it carries status, risk, priority, hierarchy, or action focus.
-7. Add atomic design parameters when the output will guide implementation or review. Keep them scoped to the components actually used.
+7. Add design constraints when the output will guide handoff or review. Keep them scoped to the components actually used.
 8. Add interaction parameters only when the reader needs to decide, approve, select, input, refresh, filter, or give feedback.
 9. Output a Markdown explanation followed by a stable structured decision block.
 10. Finish with design red lines and a validation checklist.
@@ -34,11 +34,11 @@ Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Mark
 - For daily/weekly reports, product data, sales data, digests, approvals, and retrospectives, read [card-patterns.md](references/card-patterns.md).
 - For table, chart, button, form, image, collapsible, note, and footer choices, read [component-rules.md](references/component-rules.md).
 - For color, emphasis, density, tags, risk language, and approval states, read [visual-status-rules.md](references/visual-status-rules.md).
-- For implementation-facing atomic parameters such as inline text color, tags, typography, spacing, table columns, button states, and fallback behavior, read [atomic-design-parameters.md](references/atomic-design-parameters.md).
+- For design handoff constraints such as inline text color, tags, typography, spacing, table columns, button states, and fallback behavior, read [atomic-design-constraints.md](references/atomic-design-constraints.md).
 - For button layout, input fields, select controls, form layout, validation states, loading states, and post-action card states, read [interaction-parameters.md](references/interaction-parameters.md).
-- For Feishu JSON 2.0-style skeleton boundaries, Markdown rendering, table limits, interaction constraints, and CardKit concepts, read [rendering-constraints.md](references/rendering-constraints.md).
+- For non-production structure sketch boundaries, Markdown rendering, table limits, interaction constraints, and CardKit concepts, read [rendering-constraints.md](references/rendering-constraints.md).
 - When a concrete sample is requested or the output shape is unclear, read [examples.md](references/examples.md).
-- When implementers need a more concrete per-pattern structure sketch, read [pattern-skeletons.md](references/pattern-skeletons.md).
+- When design handoff needs a more concrete per-pattern structure sketch, read [pattern-structure-sketches.md](references/pattern-structure-sketches.md).
 - When validating this skill's behavior or checking whether an output matches expected design decisions, read [evaluation-cases.md](references/evaluation-cases.md).
 - When design evidence from GitHub projects is useful, read [github-project-lessons.md](references/github-project-lessons.md).
 
@@ -90,7 +90,7 @@ visual_rules:
 - density:
 - labels:
 
-atomic_parameters:
+design_constraints:
 - typography:
 - spacing:
 - color_tokens:
@@ -109,10 +109,10 @@ interaction_rules:
 - state_changes:
 - audit_or_feedback:
 
-json_skeleton:
+structure_sketch:
 ```json
 {
-  "note": "Structure sketch only, not production-sendable Feishu JSON.",
+  "note": "Design handoff sketch only, not production-sendable Feishu JSON.",
   "schema": "json_2_0_like",
   "config": {},
   "header": {},
@@ -151,4 +151,4 @@ For review of an existing card, lead with design red lines, risks, and improveme
 - Do not color full paragraphs when a tag, key number, or short status phrase would carry the emphasis better.
 - Do not hide the required action behind long explanation.
 - Do not omit period, unit, source, owner, or audit fields when the data depends on them.
-- Do not output complete production JSON, API calls, callback handlers, auth logic, or implementation patches as this skill's main product.
+- Do not output complete production JSON, field-level schemas, API calls, callback handlers, auth logic, or implementation patches as this skill's main product.

@@ -25,7 +25,7 @@ For each case, compare the output against expected pattern, key data, component 
 4. Check that `component_plan.data_display` matches the data shape: KPI blocks for few metrics, native table for bounded rows, chart for trend/composition/funnel, collapsible panel for raw evidence.
 5. Check that `visual_rules.color_policy` starts neutral and adds color only for status, risk, priority, trend, or action focus.
 6. Check that action cards include button layout, disabled/loading/final states, and audit feedback.
-7. Check that the JSON skeleton is labeled as a structure sketch only, not production-sendable Feishu JSON.
+7. Check that `structure_sketch` is labeled as a design handoff sketch only, not production-sendable Feishu JSON.
 8. Check that `design_red_lines` names the main failure modes for this scenario, not generic advice only.
 
 ## Common Regression Signals
@@ -36,4 +36,4 @@ For each case, compare the output against expected pattern, key data, component 
 - Digests lose source attribution.
 - Reports omit period, unit, source, or baseline.
 - Long evidence is not folded.
-- The output claims to generate production-ready JSON or implementation code.
+- The output claims to generate production-ready JSON, field-level schemas, callback contracts, or implementation code.

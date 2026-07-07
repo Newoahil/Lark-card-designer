@@ -56,7 +56,7 @@ Choose components from the data shape and reader action. Avoid component variety
 
 - Use images for product recognition, article preview, or evidence only when they change comprehension.
 - Keep images secondary to metrics and actions.
-- If implementation is required, remind the implementer that Feishu needs usable image resources such as `image_key`.
+- For design handoff, note that image components require usable Feishu image resources such as `image_key` downstream.
 
 ## Metadata Rules
 
