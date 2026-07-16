@@ -170,12 +170,13 @@ Use for long-running tasks, streaming updates, and process tracking.
     "template": "running_completed_failed_or_blocked"
   },
   "elements": [
-    { "tag": "markdown", "content": "current step, latest result, blocker or next event" },
-    { "tag": "markdown_or_step_list", "purpose": "recent progress and next update" },
+    { "tag": "markdown", "purpose": "single_primary_streaming_region", "content": "latest useful result or generated answer" },
+    { "tag": "markdown_or_step_list", "purpose": "current step, concise tool-result summary, blocker, next event" },
+    { "tag": "button_group_optional", "purpose": "stop, retry, provide input, or feedback only when valid for current state" },
     { "tag": "collapsible", "content": "tool output, logs, historical steps" },
-    { "tag": "note", "content": "run stats, source, update time" }
+    { "tag": "note", "content": "run stats, source, update time, timeout or fallback note" }
   ]
 }
 ```
 
-When complete, switch to the final result pattern instead of keeping a process-first layout.
+Keep the header and primary content region stable during updates. When complete, close streaming, remove generating language, and switch to the final result pattern instead of keeping a process-first layout.

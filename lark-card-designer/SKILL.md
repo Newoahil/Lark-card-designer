@@ -1,6 +1,6 @@
 ---
 name: lark-card-designer
-description: "Feishu/Lark card style and information-architecture designer for development workflows. Use when a coding agent needs to design, choose, or review Feishu/Lark card structure, data presentation, key data selection, readability, component choices, atomic design constraints, restrained visual/status rules, optional inline text color, tags, typography, spacing, button layout, input fields, selects, form layout, interaction states, non-production structure sketches, approval cards, reports, product or sales data cards, daily or weekly reports, retrospectives, article/news digests, or CardKit-aware card behavior. This skill guides design decisions and reviews; it does not send cards, call Feishu APIs, generate production-ready JSON, produce field-level implementation schemas, or modify implementation files."
+description: "Feishu/Lark card style and information-architecture designer for development workflows. Use when a coding agent needs to design, choose, or review Feishu/Lark card structure, data presentation, key data selection, readability, component choices, atomic design constraints, restrained visual/status rules, optional inline text color, tags, typography, spacing, button layout, input fields, selects, form layout, interaction states, non-production structure sketches, approval cards, reports, product or sales data cards, daily or weekly reports, operational analytics, governance reminders, anomaly diagnosis, retrospectives, article/news digests, AI response streaming, long-running task progress, real-client render screenshots, visual preview comparison, or CardKit-aware card behavior. This skill guides design decisions, real-render visual acceptance, and reviews; it does not send cards, call Feishu APIs, generate production-ready JSON, produce field-level implementation schemas, or modify implementation files."
 ---
 
 # Lark Card Designer
@@ -23,8 +23,10 @@ Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Mark
 6. Attach restrained visual/status rules. Default to Feishu/Lark native neutral styling. Use color only when it carries status, risk, priority, hierarchy, or action focus.
 7. Add design constraints when the output will guide handoff or review. Keep them scoped to the components actually used.
 8. Add interaction parameters only when the reader needs to decide, approve, select, input, refresh, filter, or give feedback.
-9. Output a Markdown explanation followed by a stable structured decision block.
-10. Finish with design red lines and a validation checklist.
+9. Add streaming design only when progressive text, repeated component updates, or long-running task state has reader value.
+10. When screenshots, recordings, or real-client preview acceptance are requested, review the rendered evidence and keep observed issues separate from inferred risks. The implementation owner performs rendering and delivery.
+11. Output a Markdown explanation followed by a stable structured decision block.
+12. Finish with design red lines and a validation checklist.
 
 ## Reference Routing
 
@@ -32,11 +34,14 @@ Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Mark
 - For audience differences, read [audience-portfolios.md](references/audience-portfolios.md).
 - For key data selection, first-screen priority, field folding, and readability controls by data type, read [key-data-readability-rules.md](references/key-data-readability-rules.md).
 - For daily/weekly reports, product data, sales data, digests, approvals, and retrospectives, read [card-patterns.md](references/card-patterns.md).
+- For operational analytics, daily operations, governance reminders, anomaly diagnosis, product group analysis, or sameSkuGroup analysis, read [operational-analytics-rules.md](references/operational-analytics-rules.md).
+- For AI text streaming, long-running tasks, repeated component updates, progress states, or process-to-result transitions, read [streaming-card-rules.md](references/streaming-card-rules.md).
 - For table, chart, button, form, image, collapsible, note, and footer choices, read [component-rules.md](references/component-rules.md).
 - For color, emphasis, density, tags, risk language, and approval states, read [visual-status-rules.md](references/visual-status-rules.md).
 - For design handoff constraints such as inline text color, tags, typography, spacing, table columns, button states, and fallback behavior, read [atomic-design-constraints.md](references/atomic-design-constraints.md).
 - For button layout, input fields, select controls, form layout, validation states, loading states, and post-action card states, read [interaction-parameters.md](references/interaction-parameters.md).
 - For non-production structure sketch boundaries, Markdown rendering, table limits, interaction constraints, and CardKit concepts, read [rendering-constraints.md](references/rendering-constraints.md).
+- For real Feishu/Lark client screenshots, desktop/mobile rendering, visual preview comparison, preview safety, or design acceptance, read [visual-preview-review-rules.md](references/visual-preview-review-rules.md).
 - When a concrete sample is requested or the output shape is unclear, read [examples.md](references/examples.md).
 - When design handoff needs a more concrete per-pattern structure sketch, read [pattern-structure-sketches.md](references/pattern-structure-sketches.md).
 - When validating this skill's behavior or checking whether an output matches expected design decisions, read [evaluation-cases.md](references/evaluation-cases.md).
@@ -126,16 +131,22 @@ design_red_lines:
 validation_checklist:
 - [ ] first screen states the point
 - [ ] required key data for this data type is visible
+- [ ] operational analytics cards define the primary subject, reader first question, confidence, priority order, and supported next step when relevant
+- [ ] relative-position or contribution claims show the denominator/scope and use a valid comparison grain
 - [ ] key numbers include period, unit, and baseline when needed
 - [ ] component choice matches the data shape
 - [ ] tables are bounded or folded
 - [ ] any used status colors carry semantic meaning
 - [ ] inline text color is omitted unless local semantic emphasis is needed
 - [ ] actions, button layout, and disabled/loading/final states are clear
+- [ ] streaming cards use one primary streaming region, explicit exception states, and a stable final-result pattern when relevant
 - [ ] input/select/form controls have labels, defaults, validation, and empty/error states when used
 - [ ] source, period, owner, or audit fields are present when needed
 - [ ] mobile reading density is acceptable
+- [ ] real-client preview evidence is requested when rendering-dependent risk cannot be resolved from a structure sketch
 ````
+
+For real-client preview planning or review, append the conditional `preview_review` block from [visual-preview-review-rules.md](references/visual-preview-review-rules.md). Do not include it for every low-risk card. If no real render is available, label the result as pre-render design review rather than visual acceptance.
 
 For review of an existing card, lead with design red lines, risks, and improvement directions, then include the structured decision block only if a revised design direction is needed.
 
@@ -150,5 +161,9 @@ For review of an existing card, lead with design red lines, risks, and improveme
 - Do not use more than one dominant color family unless the data contains multiple independent statuses that must be compared.
 - Do not color full paragraphs when a tag, key number, or short status phrase would carry the emphasis better.
 - Do not hide the required action behind long explanation.
+- Do not label aggregate-window comparisons as a continuous time trend.
+- Do not expose raw tool logs or hidden reasoning as streaming progress.
+- Do not claim visual acceptance from JSON, source code, or a structure sketch without real-client render evidence.
+- Do not include real Feishu/Lark IDs, credentials, webhook URLs, recipient identifiers, or production callback actions in preview-review artifacts.
 - Do not omit period, unit, source, owner, or audit fields when the data depends on them.
 - Do not output complete production JSON, field-level schemas, API calls, callback handlers, auth logic, or implementation patches as this skill's main product.

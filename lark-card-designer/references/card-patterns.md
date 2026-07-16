@@ -74,8 +74,12 @@ Use for incident review, campaign review, project review, metric anomaly analysi
 Use when one task card is updated over time.
 
 - First screen: current state, current step, blocker or next expected event.
-- Body: recent progress, tool/process steps, partial result.
+- Body: one primary streaming text region when needed, recent progress, concise tool/process steps, partial result.
 - Details: logs and long tool output folded.
-- Final state: switch to the result-oriented pattern when the task completes.
-- Components: status header, step list, progress note, collapsible logs, footer with run stats.
-- Avoid: sending many separate cards for one continuously updating task when a single patchable card would preserve context.
+- Update mode: choose text streaming, component partial update, full replacement, or hybrid according to what changes.
+- Interaction: keep complex forms and approvals out of the active streaming phase; define stop, retry, input, and feedback only for valid states.
+- Final state: close the streaming phase and switch to the result-oriented pattern when the task completes.
+- Components: stable status header, one streaming/progress region, step summary, collapsible logs, footer with run stats.
+- Avoid: sending many separate cards for one continuously updating task; multiple competing streaming regions; leaving the final card in a process-first layout.
+
+Read `streaming-card-rules.md` whenever the progress card uses progressive text, repeated component updates, or CardKit streaming behavior.

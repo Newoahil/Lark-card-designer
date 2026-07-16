@@ -36,6 +36,7 @@ The goal is not to show less data. The goal is to put the decisive data first, k
 | --- | --- | --- | --- | --- |
 | Scalar KPI | metric name, value, unit, period, baseline | value, delta, status, target gap | calculation detail, historical series | KPI block plus short explanation |
 | Time series | period, metric, current value, trend, comparison | trend direction, anomaly, latest value | full time table, old periods | chart or compact trend; avoid many date columns |
+| Composition / contribution | numerator object, denominator/scope, share, period, comparison | relative position, share change, stage gap | raw numerator/denominator rows, calculation detail | composition or multi-series trend with explicit denominator |
 | Detail rows / table | row identity, status, key value, owner/action | top risky/actionable rows | raw IDs, low-priority columns, long notes | native table; 5 to 10 visible rows |
 | Top-N ranking | rank, item name, metric, change, reason/status | top movers, top risks, best/worst | complete ranking, raw evidence | Top-N list/table; sort key explicit |
 | Product data | SKU/category, inventory, sales, conversion, margin/refund, status | scope, health, anomaly, Top/Bottom products | full SKU table, image-heavy detail | KPI + Top-N + bounded SKU table |
@@ -71,8 +72,18 @@ The goal is not to show less data. The goal is to put the decisive data first, k
 
 - Always pair values with units when units change interpretation.
 - Show baseline for deltas: YoY, MoM, target, previous period, forecast, or threshold.
+- For share, contribution, rate, or penetration metrics, show or clearly name the denominator and scope.
+- Use raw values for scale questions and relative metrics for position-within-a-whole questions.
+- Distinguish `0`, missing, unavailable, and not applicable; never let `-` silently mean zero.
 - Use signed deltas consistently. Do not mix `+12%`, `up 12%`, and `12 percent higher` in one card.
 - Mark abnormal values with text plus tag/color; do not rely on color alone.
+
+### Time Grain And Comparison
+
+- Call a series a trend only when observations use a consistent ordered time grain.
+- Label `1-day`, `7-day`, and `30-day` aggregates as window comparison unless underlying daily or weekly nodes exist.
+- Do not connect unrelated aggregate windows with a line that implies continuous movement.
+- Compare metrics only when scope, denominator, period, unit, and calculation definition are compatible.
 
 ### Tables
 

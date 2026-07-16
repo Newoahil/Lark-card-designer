@@ -150,6 +150,23 @@ Every action card should describe what the card becomes after interaction.
 - `failed`: error reason and retry/fallback visible.
 - `expired`: action disabled, history/detail still accessible.
 
+## Active Streaming Interaction
+
+Use these rules when the same card is still receiving streaming or repeated component updates:
+
+- Treat generation and callback-driven interaction as separate phases.
+- During active streaming, expose only low-ambiguity controls such as stop or provide required input when the workflow supports them.
+- Do not place approval, destructive confirmation, or a multi-field form inside the active streaming phase.
+- Close the streaming phase before enabling feedback, approval, or other interactions whose callback changes the card.
+- After completion, replace process controls with final actions, feedback, or audit state.
+- For `failed`, `stopped`, `timed_out`, or `blocked`, preserve the latest useful result and show retry, fallback, or detail access when valid.
+
+Specify this transition when relevant:
+
+```text
+active_streaming -> finalizing -> streaming_closed -> final_interaction_enabled
+```
+
 ## Mobile Behavior
 
 - Prefer one full-width primary button when the action is critical.

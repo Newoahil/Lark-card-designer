@@ -31,10 +31,13 @@ Choose components from the data shape and reader action. Avoid component variety
 
 - Trend: line chart or compact trend chart.
 - Composition: pie, donut, stacked bar, or comparable composition chart.
+- Contribution over time: multi-series line chart only when each series uses the same denominator, scope, and time grain.
 - Funnel: funnel chart or staged conversion layout.
 - Ranking: bar chart or Top-N table.
 - Target gap: progress bar, bullet chart, or KPI plus delta.
 - Anomaly: highlight label plus trend context.
+- Label series by metric meaning, not color alone. Use direct labels, legend text, line style, or markers so the chart remains understandable without color.
+- Treat aggregate windows such as 1-day, 7-day, and 30-day as categorical comparisons unless consistent time nodes support a real trend.
 - Do not use a chart if one sentence or a KPI block communicates the point better.
 
 ## Button And Action Rules

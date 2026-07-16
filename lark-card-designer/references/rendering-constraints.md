@@ -77,6 +77,15 @@ Always label sketches: "Design handoff sketch only, not production-sendable Feis
 - For approval and destructive actions, specify confirmation and post-action lock state.
 - For feedback loops, define how feedback changes future triage, even if implementation is out of scope.
 
+## Streaming And Partial Updates
+
+- Use one primary plain-text or rich-text region for typewriter-style output.
+- Use component-level updates for steps, charts, button state, or feedback rather than streaming unstable structured content.
+- Keep update ordering and active-interaction conflicts visible as implementation handoff constraints.
+- Treat shared multi-update behavior, timeout, forwarding restrictions, final closure, content limits, and client fallback as compatibility concerns.
+- Do not include sequence values, API payloads, callback code, or streaming parameter tuning in normal design output.
+- Read `streaming-card-rules.md` for the full design decision and state-transition model.
+
 ## Long Content
 
 - First screen should answer the user's question.
