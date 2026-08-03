@@ -4,6 +4,8 @@ Use this file when the card is an action surface: approval, confirmation, parame
 
 Do not add controls just because Feishu supports them. Every control must reduce ambiguity, prevent an error, or shorten a required workflow.
 
+All parameter names and state labels in this file are design vocabulary, not Feishu JSON properties or enum values. Map controls only to verified JSON 2.0 components and require the implementation owner to check the matching component document for fields, nesting, callback behavior, and client constraints.
+
 ## Interaction Decision Rules
 
 | User need | Prefer | Avoid |
@@ -31,7 +33,8 @@ Specify button layout when the card has actions.
 | `max_visible_buttons` | Prefer 1 primary + up to 2 secondary visible buttons |
 | `destructive_action` | Make visually and textually distinct; require confirmation |
 | `disabled_after_submit` | Disable or replace action buttons after final state |
-| `loading_state` | Show that the action is being processed; prevent duplicate submission |
+| `accepted_state` | Immediately confirm receipt, lock controls, and avoid claiming business success |
+| `processing_state` | Use only for meaningful long work; show the real phase and next event |
 | `final_state_label` | Replace action area with final state such as `已批准`, `已拒绝`, `已提交` |
 
 Button ordering:
@@ -52,7 +55,8 @@ Button text:
 | State | Primary button | Secondary buttons | Card feedback |
 | --- | --- | --- | --- |
 | Initial | Enabled | Enabled if relevant | Show required context before actions |
-| Loading/submitting | Disabled or loading | Disabled | Show short processing state |
+| Accepted/submitting | Disabled or replaced | Disabled | Confirm the interaction was received without claiming business success |
+| Processing | Disabled or replaced | Show cancel/detail only when valid | Show the real phase, next event, and whether the reader may leave |
 | Success/final | Replaced or disabled | Hidden or disabled | Show final state, actor, time |
 | Failed | Re-enable if retry is safe | Show fallback/detail | Show reason and retry path |
 | Expired | Disabled | Show view/history only | Show expiry time and next path |
@@ -143,18 +147,68 @@ Form layout rules:
 Every action card should describe what the card becomes after interaction.
 
 - `pending`: actions available, required context visible.
-- `submitting`: controls locked, no duplicate action.
+- `accepted`: the click, selection, or form submission was received; controls are locked, but business completion is not implied.
+- `processing`: meaningful long-running work is active; show a truthful phase, next expected event, and side-effect boundary.
 - `completed`: action area replaced by final status and audit fields.
 - `rejected`: final state visible, reason shown.
 - `returned`: next owner and required revision visible.
 - `failed`: error reason and retry/fallback visible.
+- `blocked`: blocker, owner, and recovery path visible.
+- `needs_input`: required input and resume action visible.
+- `cancelled`: cancellation result and any completed side effects visible.
+- `already_processed`: repeated action resolves to the stable existing outcome instead of starting another progress state.
 - `expired`: action disabled, history/detail still accessible.
+
+## Action Acceptance And Long-Running Callback States
+
+Separate interaction acceptance from business completion whenever a click can trigger planning, external reads, approval routing, batch work, or another long-running task.
+
+Use this state model as a design overlay:
+
+```text
+pending
+-> accepted
+-> processing
+-> completed | failed | blocked | needs_input | cancelled | already_processed
+```
+
+Fast actions may move from `accepted` directly to a terminal state. Do not invent a progress state when the operation completes quickly or is blocked before meaningful work begins.
+
+State semantics:
+
+- `accepted` means only that the interaction was received. Use copy such as `Selection received; continuing analysis` or `Request accepted; this card will update when processing finishes`.
+- `processing` must name a truthful phase rather than only saying `Please wait`. Show trustworthy completed/total progress when known; otherwise name the activity without a false percentage.
+- every `accepted` or `processing` state must lead to a visible terminal state or a `needs_input` state.
+- show whether the reader may leave and expect the card to update when the workflow is long enough for that guidance to matter.
+- state what has and has not produced side effects. Before confirmation, say that no execution occurs without the click when this is a consequential workflow. After acceptance, do not imply that side effects have happened unless they actually have.
+
+Duplicate-action behavior:
+
+- never turn a repeated click into silence; show `already_processed`, the current processing state, or the stable terminal result.
+- do not start a second progress transition for a duplicate event.
+- keep the visible outcome consistent with the original action: completed, cancelled, failed, blocked, or still processing.
+
+Clarification-card behavior:
+
+- treat a selection as input for continued understanding or planning, not proof that the selected business action has executed.
+- after selection, use an accepted state such as `Selection received; continuing to interpret the request`.
+- the next visible state may be another clarification card, an approval card, a result card, or a blocker. Do not promise a result that still depends on planning or approval.
+
+Implementation-owner constraints for the design handoff:
+
+- acknowledge the interaction within the platform response deadline; long work must not block acknowledgement.
+- perform delayed card updates only after acknowledgement has completed.
+- preserve idempotency and suppress duplicate progress transitions while returning visible duplicate-action feedback.
+- avoid card-update or streaming conflicts while an interaction is active.
+
+State these as compatibility or acceptance constraints only. Do not produce queue architecture, event keys, UUID generation, callback payloads, HTTP handling, SDK code, API calls, or sender/update scripts.
 
 ## Active Streaming Interaction
 
 Use these rules when the same card is still receiving streaming or repeated component updates:
 
 - Treat generation and callback-driven interaction as separate phases.
+- If streaming or long-running work starts from a user action, show `accepted` before process progress; acceptance is not a success result and is not itself a streaming phase.
 - During active streaming, expose only low-ambiguity controls such as stop or provide required input when the workflow supports them.
 - Do not place approval, destructive confirmation, or a multi-field form inside the active streaming phase.
 - Close the streaming phase before enabling feedback, approval, or other interactions whose callback changes the card.
@@ -197,7 +251,13 @@ interaction_parameters:
 - form_layout:
   - field_order: [environment, reviewers, approval_comment]
   - submit_area: primary_submit + cancel
-  - post_submit_state: loading -> final_locked
+  - post_submit_state: accepted -> processing -> final_locked
+- action_state_model:
+  - acceptance_copy: request received; processing will continue
+  - terminal_states: [completed, failed, blocked, needs_input, cancelled, already_processed]
+  - duplicate_action_feedback: show current or final stable state
+  - side_effect_boundary: no execution before confirmation; accepted does not imply completion
+  - safe_to_leave: state when the card will update without the reader waiting
 - validation_states:
   - missing_required: show field-level error
   - stale_data: show refresh action

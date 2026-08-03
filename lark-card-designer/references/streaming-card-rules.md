@@ -20,7 +20,7 @@ Avoid streaming when the result is fast, static, approval-only, or when intermed
 
 | Update mode | Design use | Suitable content |
 | --- | --- | --- |
-| `text_streaming` | Progressive AI or long-text output | One primary plain-text or rich-text region |
+| `text_streaming` | Progressive AI or long-text output | One primary verified `markdown` or `div` region, subject to authoring-path support |
 | `component_partial_update` | State changes without rebuilding the whole layout | Step status, tool-result summary, chart, feedback state |
 | `full_replace` | Major information-architecture transition | Running process to final report or completed result |
 | `hybrid` | Text first, then component updates and final replacement | Multi-step agent tasks and AI-assisted workflows |
@@ -64,6 +64,8 @@ Avoid multiple competing streaming text regions. Fold historical steps, raw tool
 
 - Keep complex forms, approvals, and irreversible actions out of the active streaming phase.
 - Treat active streaming and callback-driven interaction as separate phases in the design handoff.
+- When a user action starts a long process, confirm `accepted` before entering the progress or streaming phase. `Accepted` means the input was received, not that the work succeeded.
+- Enter a progress or streaming state only after the workflow has actually begun meaningful long-running work; a quick blocker or clarification should transition directly to its appropriate state.
 - Close the streaming phase before enabling interactions whose callback changes the card.
 - On completion, remove generating language, show a stable summary, and expose final actions or feedback.
 - Ensure the final message-preview summary no longer implies that generation is active.
@@ -76,10 +78,11 @@ Streaming controls the generation process, not the final information architectur
 
 Mention these only as compatibility constraints for the implementation owner:
 
-- text streaming is suited to one plain-text or rich-text content region
-- builder-based cards may restrict text streaming to the rich-text component; implementation owners should confirm the selected authoring path
+- text streaming is suited to one verified `markdown` or `div` content region
+- builder-based cards may restrict text streaming to the `markdown` component; implementation owners should confirm the selected authoring path and exact CardKit capability
 - component-level partial updates can continue for state, chart, action, or feedback changes
 - updates must preserve ordering and should not compete with an active user interaction
+- delayed updates begin only after the interaction acknowledgement; the implementation owner must satisfy the platform response deadline without blocking on long work
 - active streaming uses shared multi-update behavior rather than an exclusive-card model
 - active streaming cards cannot be forwarded until the streaming phase is closed
 - streaming can time out and must finish in a stable final state
