@@ -24,6 +24,8 @@ For each case, compare the output against expected pattern, key data, component 
 | JSON 2.0 feasibility handoff | Any design expected to become Feishu Card JSON 2.0 | original scenario pattern plus mandatory feasibility gate | target schema, authoring path, exact official component tags, conceptual mappings, conditions, fallbacks, implementation verification | invented/deprecated tag; pseudo schema; root elements; guessed field/style; compatibility claimed without exact verification |
 | Visual-builder handoff | Card must be authored in the visual builder | original scenario pattern with authoring-path constraints | only builder-supported capabilities or explicit fallback; unsupported JSON-only components remain conditional | `collapsible_panel`, `select_img`, `checker`, or `audio` is prescribed as directly available in the visual builder |
 | Chart recommendation | Trend, composition, funnel, or target-gap visual | original scenario pattern with conditional chart | business question, chart type intent, compatible data grain, `chart_spec` verification requirement, non-chart fallback | chart is called sendable or compatible from the `chart` tag alone; fabricated VChart fields or no fallback |
+| Chart rejection | Single KPI, article digest, approval amount, or raw rows without a visual question | original scenario pattern without chart | explicit `chart_decision.should_use_chart: no` or equivalent, reason why KPI/table/text is clearer | decorative chart is added; chart chosen because data is numeric only |
+| Number emphasis | Deltas, threshold breaches, inverse metrics, risk counts, missing/low-confidence values | original scenario pattern plus number emphasis rules | emphasized values, method, color semantics, metric direction, numbers not emphasized | every number is colored; positive/negative color ignores metric direction; color carries meaning without text/tag |
 
 ## Review Procedure
 
@@ -31,19 +33,21 @@ For each case, compare the output against expected pattern, key data, component 
 2. Check that `card_pattern.name` matches the expected pattern or has a clear justified alternative.
 3. Check that `key_data_rules.must_show` includes the required trust fields: period, source, unit, owner, deadline, or audit trail when relevant.
 4. Check that `component_plan.data_display` matches the data shape: conceptual KPI groups map to verified components, bounded rows use `table`, charts stay conditional until `chart_spec` validation, and folded evidence has an authoring-path fallback.
-5. Check that `visual_rules.color_policy` starts neutral and adds color only for status, risk, priority, trend, or action focus.
-6. For operational analytics, check that the card is organized by decision or action priority rather than data-source order, and that low-confidence conclusions remain visibly uncertain.
-7. For relative contribution or position analysis, check denominator, scope, time grain, and missing-value semantics.
-8. For streaming, check the reason, update mode, one primary streaming region, active-to-final interaction transition, exception states, and final result pattern.
-9. For real-client preview review, check that findings are tied to a version and evidence, observed issues are separated from inferred risks, sample data is anonymized, interactions are non-production, and the verdict does not imply deployment approval.
-10. Check that action cards include button layout, disabled/accepted/processing/final states, and audit feedback.
-11. For long-running actions, check that acceptance does not claim completion, duplicate clicks receive a visible stable state, side-effect boundaries are clear, and every processing state has a terminal or needs-input path.
-12. Check that implementation constraints remain handoff requirements and do not turn into callback payloads, HTTP handling, queue design, API calls, or code.
-13. Check that `feasibility_check` separates `official_components`, `conditional_components`, `conceptual_only_patterns`, and `unsupported_or_unverified_requests`.
-14. Check every implementation-facing body component against the exact JSON 2.0 whitelist. Nested tags may appear only as nested mappings, never as generic `body.elements` components.
-15. Check that authoring-path restrictions are explicit. JSON-only and visual-builder-only capabilities must not be transferred across authoring paths without a fallback.
-16. Check that `structure_sketch` is labeled as a design handoff component map only, not production-sendable Feishu JSON, and that it contains no JSON-looking envelope.
-17. Check that `design_red_lines` names the main failure modes for this scenario, not generic advice only.
+5. Check that `chart_decision` says whether a chart is useful, names the business question, selects a chart type only when data grain is compatible, and provides a non-chart fallback.
+6. Check that `number_emphasis_rules` names only decision-changing values, states the emphasis method, and handles inverse metrics such as refund rate, defect rate, cost, latency, or risk count.
+7. Check that `visual_rules.color_policy` starts neutral and adds color only for status, risk, priority, trend, or action focus.
+8. For operational analytics, check that the card is organized by decision or action priority rather than data-source order, and that low-confidence conclusions remain visibly uncertain.
+9. For relative contribution or position analysis, check denominator, scope, time grain, and missing-value semantics.
+10. For streaming, check the reason, update mode, one primary streaming region, active-to-final interaction transition, exception states, and final result pattern.
+11. For real-client preview review, check that findings are tied to a version and evidence, observed issues are separated from inferred risks, sample data is anonymized, interactions are non-production, and the verdict does not imply deployment approval.
+12. Check that action cards include button layout, disabled/accepted/processing/final states, and audit feedback.
+13. For long-running actions, check that acceptance does not claim completion, duplicate clicks receive a visible stable state, side-effect boundaries are clear, and every processing state has a terminal or needs-input path.
+14. Check that implementation constraints remain handoff requirements and do not turn into callback payloads, HTTP handling, queue design, API calls, or code.
+15. Check that `feasibility_check` separates `official_components`, `conditional_components`, `conceptual_only_patterns`, and `unsupported_or_unverified_requests`.
+16. Check every implementation-facing body component against the exact JSON 2.0 whitelist. Nested tags may appear only as nested mappings, never as generic `body.elements` components.
+17. Check that authoring-path restrictions are explicit. JSON-only and visual-builder-only capabilities must not be transferred across authoring paths without a fallback.
+18. Check that `structure_sketch` is labeled as a design handoff component map only, not production-sendable Feishu JSON, and that it contains no JSON-looking envelope.
+19. Check that `design_red_lines` names the main failure modes for this scenario, not generic advice only.
 
 ## JSON 2.0 Hard Failures
 
@@ -70,6 +74,8 @@ Allowed occurrences of invalid names are limited to explicit warnings, negative 
 - Clarification cards describe a selected option as already executed instead of continuing understanding or planning.
 - Digests lose source attribution.
 - Reports omit period, unit, source, or baseline.
+- Chart decisions omit the business question, data grain, chart fallback, or `chart_spec` verification requirement.
+- Numeric emphasis colors every number, ignores thresholds/baselines, or treats all positive deltas as healthy.
 - Operational analytics cards show many metrics but no primary subject, priority order, confidence, or next-step judgment.
 - Relative-position cards use raw values without denominator, scope, or a valid comparison grain.
 - Streaming cards expose logs or reasoning, keep several regions moving, or never transition to a stable final pattern.

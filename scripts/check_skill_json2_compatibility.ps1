@@ -33,6 +33,7 @@ if (-not (Test-Path -LiteralPath $skillRoot -PathType Container)) {
 
 $requiredFiles = @(
     "SKILL.md",
+    "references/data-visualization-rules.md",
     "references/json-2.0-compatibility-rules.md",
     "references/pattern-structure-sketches.md"
 )
@@ -108,7 +109,10 @@ for ($index = 0; $index -lt $patternSketchLines.Count; $index++) {
 
 $skillText = Get-Content -Raw -LiteralPath (Join-Path $skillRoot "SKILL.md") -Encoding utf8
 foreach ($requiredText in @(
+    "data-visualization-rules.md",
     "json-2.0-compatibility-rules.md",
+    "chart_decision:",
+    "number_emphasis_rules:",
     "feasibility_check:",
     "official_components:",
     "conditional_components:",

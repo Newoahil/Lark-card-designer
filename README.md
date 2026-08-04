@@ -25,6 +25,8 @@
 - 只在实施映射中使用已核实的官方组件名；涉及编写路径、客户端版本、资源、嵌套或图表规格限制时给出保守降级方案
 - 区分管理层、业务运营、一线执行、复盘分析、知识/资讯口径
 - 根据数据类型判断必须展示的关键字段、首屏优先级、折叠字段和可读性控制
+- 判断数据是否适合使用图表、推荐趋势/构成/漏斗/排名/目标缺口等图表意图，并要求非图表降级方案和 `chart_spec` 实施验证
+- 判断哪些关键数字需要标签、层级或短片段颜色强调，并避免把所有数字或正负 delta 装饰化上色
 - 为运营分析场景补充主语、首要问题、置信度、趋势基线、优先级和下一步动作判断
 - 区分绝对规模与相对贡献，约束分母口径、时间粒度、窗口对比和缺失值语义
 - 为流式卡片选择文本流式、组件局部更新、全量替换或混合模式，并设计稳定区域、异常状态、交互切换和最终态
@@ -129,6 +131,8 @@ card_intent
 card_pattern
 information_architecture
 key_data_rules
+chart_decision
+number_emphasis_rules
 feasibility_check
 component_plan
 visual_rules
@@ -193,6 +197,8 @@ python C:\Users\<you>\.codex\skills\.system\skill-creator\scripts\quick_validate
 - Use verified official component names in implementation-facing mappings and provide conservative fallbacks for authoring-path, client, resource, nesting, or chart-spec constraints
 - Adapt designs for management, business operations, frontline execution, retrospective analysis, and knowledge/news audiences
 - Identify must-show key fields, first-screen priority, folded fields, and readability controls by data type
+- Decide whether data deserves a chart, recommend trend/composition/funnel/ranking/target-gap chart intent, and require non-chart fallbacks plus implementation-side `chart_spec` verification
+- Decide which key numbers deserve tags, hierarchy, or short-fragment color emphasis while avoiding decorative coloring of every number or delta
 - Add operational analytics rules for primary subject, first question, confidence, trend baseline, priority order, and next-step judgment
 - Distinguish absolute scale from relative contribution and constrain denominator, time grain, window comparison, and missing-value semantics
 - Choose text streaming, component partial updates, full replacement, or hybrid behavior, including stable regions, exception states, interaction transitions, and finalization
@@ -263,6 +269,8 @@ card_intent
 card_pattern
 information_architecture
 key_data_rules
+chart_decision
+number_emphasis_rules
 feasibility_check
 component_plan
 visual_rules

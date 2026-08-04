@@ -23,6 +23,22 @@ information_architecture:
 - details: raw project rows folded or linked
 - footer_or_note: source and update time
 
+chart_decision:
+- should_use_chart: conditional
+- business_question: whether weekly KPI movement is persistent enough to change owner priority
+- recommended_chart_type: compact trend chart if ordered weekly nodes are available
+- data_requirements: same metric definition, unit, scope, and weekly grain
+- why_not_table_or_kpi: KPI group states health; chart adds value only for persistence or volatility
+- fallback: KPI delta plus one markdown comparison sentence
+- implementation_verification_needed: chart_spec and mobile render
+
+number_emphasis_rules:
+- emphasized_numbers: [target_gap_delta, top_risk_impact]
+- emphasis_method: risk tag plus at most one inline delta color
+- color_semantics: red for severe missed target, orange for near-threshold warning, green only for recovered or target reached
+- numbers_not_to_emphasize: [all secondary KPI values, unchanged metrics]
+- missing_context: [target_or_previous_period_if_absent]
+
 feasibility_check:
 - target_schema: Feishu Card JSON 2.0
 - authoring_path: unknown
@@ -60,6 +76,22 @@ information_architecture:
 - details: bounded SKU table
 - footer_or_note: source table and update time
 
+chart_decision:
+- should_use_chart: no by default
+- business_question: which SKU needs action first
+- recommended_chart_type: none unless category-level trend or contribution is provided
+- data_requirements: ordered time nodes for trend, or explicit denominator for contribution
+- why_not_table_or_kpi: SKU rows need identity, status, decisive metric, and owner/action more than a decorative chart
+- fallback: Top/Bottom SKU table with status tags
+- implementation_verification_needed: chart_spec only if a trend/contribution chart is later added
+
+number_emphasis_rules:
+- emphasized_numbers: [stockout_count, severe_refund_rate_delta, conversion_drop]
+- emphasis_method: table status column and short risk tag; inline color only for the decisive delta
+- color_semantics: red for stockout or severe deterioration, orange for warning threshold, green only for recovered inventory or improved conversion when higher is good
+- numbers_not_to_emphasize: [raw SKU IDs, image counts, unchanged sales values]
+- missing_context: [thresholds, baseline, metric_direction]
+
 feasibility_check:
 - target_schema: Feishu Card JSON 2.0
 - authoring_path: unknown
@@ -95,6 +127,22 @@ information_architecture:
 - details: opportunity rows folded or linked
 - footer_or_note: CRM source, period, forecast assumptions
 
+chart_decision:
+- should_use_chart: conditional
+- business_question: whether forecast gap is caused by trend weakness, stage conversion, or region/channel split
+- recommended_chart_type: line chart for ordered revenue trend; funnel chart for stage conversion; stacked or grouped bar for compatible region/channel split
+- data_requirements: consistent period, unit, scope, stage definitions, target/forecast baseline, and compatible denominators
+- why_not_table_or_kpi: use KPI for headline completion; chart only if it explains movement or stage loss faster
+- fallback: KPI completion plus staged markdown/table for funnel and Top-N opportunity risks
+- implementation_verification_needed: VChart chart_spec, chart component fields, mobile render, and authoring path
+
+number_emphasis_rules:
+- emphasized_numbers: [target_completion_rate, forecast_gap, largest_negative_movement]
+- emphasis_method: one key KPI hierarchy plus status tag; inline color only for the decisive gap/delta
+- color_semantics: red for missed target or expanding negative gap, orange for near-risk, green for target reached or recovered forecast
+- numbers_not_to_emphasize: [all region values, neutral opportunity amounts without risk ranking]
+- missing_context: [target, forecast assumptions, whether higher/lower is good]
+
 feasibility_check:
 - target_schema: Feishu Card JSON 2.0
 - authoring_path: unknown
@@ -125,6 +173,22 @@ information_architecture:
 - body: must-read, optional, and archive groups
 - details: related links folded or linked
 - footer_or_note: source count and collection time
+
+chart_decision:
+- should_use_chart: no
+- business_question: not applicable; reader needs triage and source attribution
+- recommended_chart_type: none
+- data_requirements: none
+- why_not_table_or_kpi: chart does not improve article selection
+- fallback: categorized markdown list with source and priority tags
+- implementation_verification_needed: none for chart
+
+number_emphasis_rules:
+- emphasized_numbers: [must_read_count only if it changes workload]
+- emphasis_method: tag or short text, not inline color by default
+- color_semantics: neutral unless priority or freshness is a real status
+- numbers_not_to_emphasize: [source counts, collection totals]
+- missing_context: []
 
 feasibility_check:
 - target_schema: Feishu Card JSON 2.0
@@ -160,6 +224,22 @@ information_architecture:
 - body: reason, impact, risk, evidence
 - details: purchase details and history folded or linked
 - footer_or_note: audit fields
+
+chart_decision:
+- should_use_chart: no
+- business_question: approval decision is based on facts and policy thresholds, not visual trend
+- recommended_chart_type: none
+- data_requirements: none
+- why_not_table_or_kpi: amount and impact should be shown as decision facts
+- fallback: labeled fact block
+- implementation_verification_needed: none for chart
+
+number_emphasis_rules:
+- emphasized_numbers: [amount only when it crosses an approval or risk threshold]
+- emphasis_method: risk tag or key fact hierarchy; avoid inline color if current state already uses a status header
+- color_semantics: red for severe policy/risk breach, orange for pending or near-threshold, neutral for ordinary amount
+- numbers_not_to_emphasize: [approval id, audit timestamp, ordinary amount below threshold]
+- missing_context: [policy_threshold, budget_scope]
 
 feasibility_check:
 - target_schema: Feishu Card JSON 2.0
@@ -199,6 +279,22 @@ information_architecture:
 - body: comparison evidence, evidence rows, cause hypothesis
 - details: raw campaign data folded or linked
 - footer_or_note: data source and limitations
+
+chart_decision:
+- should_use_chart: conditional
+- business_question: whether the drop is sudden, persistent, or isolated to one segment
+- recommended_chart_type: line chart for ordered performance trend; grouped bar for compatible segment comparison
+- data_requirements: consistent time grain, baseline, unit, and segment scope
+- why_not_table_or_kpi: KPI states impact; chart adds value only for persistence, volatility, or segment split
+- fallback: markdown comparison with baseline plus bounded evidence table
+- implementation_verification_needed: chart_spec, table columns, mobile render
+
+number_emphasis_rules:
+- emphasized_numbers: [drop_delta, impact_amount, confidence_level]
+- emphasis_method: one inline delta color plus confidence/risk tag
+- color_semantics: red for severe drop when lower is bad, orange for weak evidence or warning, gray for low-confidence unavailable data
+- numbers_not_to_emphasize: [raw evidence row values not tied to cause]
+- missing_context: [baseline, metric_direction, confidence_basis]
 
 feasibility_check:
 - target_schema: Feishu Card JSON 2.0

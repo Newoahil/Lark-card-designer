@@ -1,6 +1,6 @@
 ---
 name: lark-card-designer
-description: "Feishu/Lark card style, JSON 2.0 feasibility, and information-architecture designer for coding workflows. Use when an agent needs to design or review card structure, data presentation, key data, readability, official component compatibility, conservative fallbacks, atomic constraints, restrained visual/status rules, inline color, tags, typography, spacing, buttons, inputs, selects, forms, accepted/processing/final action states, clarification or duplicate-action feedback, non-production component maps, approvals, reports, product or sales cards, daily or weekly reports, operational analytics, governance or anomaly cards, retrospectives, digests, AI streaming, long-running task progress, real-client screenshots, preview comparisons, or CardKit-aware behavior. Guides design decisions, compatibility handoff, render review, and acceptance; does not send cards, call Feishu APIs, generate production JSON or field-level schemas, or modify implementation files."
+description: "Feishu/Lark card style, JSON 2.0 feasibility, and information-architecture designer for coding workflows. Use when an agent needs to design or review card structure, data presentation, key data, readability, chart suitability, chart type intent, number emphasis, official component compatibility, conservative fallbacks, atomic constraints, restrained visual/status rules, inline color, tags, typography, spacing, buttons, inputs, selects, forms, accepted/processing/final action states, clarification or duplicate-action feedback, non-production component maps, approvals, reports, product or sales cards, daily or weekly reports, operational analytics, governance or anomaly cards, retrospectives, digests, AI streaming, long-running task progress, real-client screenshots, preview comparisons, or CardKit-aware behavior. Guides design decisions, compatibility handoff, render review, and acceptance; does not send cards, call Feishu APIs, generate production JSON or field-level schemas, or modify implementation files."
 ---
 
 # Lark Card Designer
@@ -20,14 +20,15 @@ Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Mark
 3. Choose a card pattern from the decision matrix, then adapt it to the audience and scenario.
 4. Run the JSON 2.0 feasibility gate before selecting concrete components or style parameters. Classify every proposed capability as official, conditional, conceptual-only, or unsupported/unverified. Never guess a tag, field, enum, nesting rule, Markdown extension, or CSS-like property.
 5. Select key data and readability controls before choosing decorative or secondary details.
-6. Select components for clarity, not decoration. Use only verified JSON 2.0 component names in implementation-facing mappings and provide a conservative fallback for every conditional capability.
-7. Attach restrained visual/status rules. Default to Feishu/Lark native neutral styling. Use color only when it carries status, risk, priority, hierarchy, or action focus.
-8. Add design constraints when the output will guide handoff or review. Keep them scoped to the components actually used and express unverified field details as design intent, not guessed syntax.
-9. Add interaction parameters only when the reader needs to decide, approve, select, input, refresh, filter, or give feedback. For long-running actions, separate accepted, processing, and terminal semantics; define visible duplicate-action feedback and side-effect boundaries.
-10. Add streaming design only when progressive text, repeated component updates, or long-running task state has reader value.
-11. When screenshots, recordings, or real-client preview acceptance are requested, review the rendered evidence and keep observed issues separate from inferred risks. The implementation owner performs rendering and delivery.
-12. Output a Markdown explanation followed by a stable structured decision block.
-13. Finish with compatibility red lines, scenario-specific design red lines, and a validation checklist.
+6. When metrics, trends, rankings, composition, funnel stages, target gaps, anomalies, charts, or colored numbers are relevant, run the data-visualization and number-emphasis gates before finalizing components.
+7. Select components for clarity, not decoration. Use only verified JSON 2.0 component names in implementation-facing mappings and provide a conservative fallback for every conditional capability.
+8. Attach restrained visual/status rules. Default to Feishu/Lark native neutral styling. Use color only when it carries status, risk, priority, hierarchy, or action focus.
+9. Add design constraints when the output will guide handoff or review. Keep them scoped to the components actually used and express unverified field details as design intent, not guessed syntax.
+10. Add interaction parameters only when the reader needs to decide, approve, select, input, refresh, filter, or give feedback. For long-running actions, separate accepted, processing, and terminal semantics; define visible duplicate-action feedback and side-effect boundaries.
+11. Add streaming design only when progressive text, repeated component updates, or long-running task state has reader value.
+12. When screenshots, recordings, or real-client preview acceptance are requested, review the rendered evidence and keep observed issues separate from inferred risks. The implementation owner performs rendering and delivery.
+13. Output a Markdown explanation followed by a stable structured decision block.
+14. Finish with compatibility red lines, scenario-specific design red lines, and a validation checklist.
 
 ## Reference Routing
 
@@ -35,6 +36,7 @@ Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Mark
 - For pattern selection, read [decision-matrix.md](references/decision-matrix.md).
 - For audience differences, read [audience-portfolios.md](references/audience-portfolios.md).
 - For key data selection, first-screen priority, field folding, and readability controls by data type, read [key-data-readability-rules.md](references/key-data-readability-rules.md).
+- For chart suitability, chart type decisions, chart fallbacks, and deciding which numbers deserve color/tag/bold emphasis, read [data-visualization-rules.md](references/data-visualization-rules.md).
 - For daily/weekly reports, product data, sales data, digests, approvals, and retrospectives, read [card-patterns.md](references/card-patterns.md).
 - For operational analytics, daily operations, governance reminders, anomaly diagnosis, product group analysis, or sameSkuGroup analysis, read [operational-analytics-rules.md](references/operational-analytics-rules.md).
 - For AI text streaming, long-running tasks, repeated component updates, progress states, or process-to-result transitions, read [streaming-card-rules.md](references/streaming-card-rules.md).
@@ -81,6 +83,22 @@ key_data_rules:
 - folded_or_linked:
 - readability_controls:
 - missing_data_questions:
+
+chart_decision:
+- should_use_chart:
+- business_question:
+- recommended_chart_type:
+- data_requirements:
+- why_not_table_or_kpi:
+- fallback:
+- implementation_verification_needed:
+
+number_emphasis_rules:
+- emphasized_numbers:
+- emphasis_method:
+- color_semantics:
+- numbers_not_to_emphasize:
+- missing_context:
 
 feasibility_check:
 - target_schema: Feishu Card JSON 2.0
@@ -151,6 +169,11 @@ validation_checklist:
 - [ ] operational analytics cards define the primary subject, reader first question, confidence, priority order, and supported next step when relevant
 - [ ] relative-position or contribution claims show the denominator/scope and use a valid comparison grain
 - [ ] key numbers include period, unit, and baseline when needed
+- [ ] chart_decision explains whether a chart is useful, which business question it answers, and why KPI/table is not enough or is better
+- [ ] recommended chart type matches the data shape and uses compatible grain, denominator, scope, unit, and series definitions
+- [ ] every chart remains conditional until `chart_spec`, component fields, client behavior, and real render are verified, with a non-chart fallback
+- [ ] number_emphasis_rules identify only decision-changing values for tag, bold, or inline color emphasis
+- [ ] positive/negative colors follow the metric's business direction, especially inverse metrics such as refund rate, defect rate, cost, latency, or risk count
 - [ ] feasibility check classifies official, conditional, conceptual-only, and unsupported/unverified capabilities
 - [ ] every implementation-facing component name is an official JSON 2.0 tag or a clearly labeled nested tag
 - [ ] conceptual names are mapped to real components and never presented as JSON tags
@@ -180,6 +203,10 @@ For review of an existing card, lead with design red lines, risks, and improveme
 
 - Do not put full raw details on the first screen.
 - Do not use a table as the default home for every number.
+- Do not recommend a chart without a visual question, compatible data grain, and a non-chart fallback.
+- Do not connect aggregate windows such as 1-day, 7-day, and 30-day as a continuous line unless underlying ordered time nodes exist.
+- Do not color every KPI, every delta, or every table row; emphasize only values that change interpretation or action.
+- Do not assume green means good or red means bad until the metric direction is known.
 - Do not invent component tags, fields, enum values, nesting rules, Markdown extensions, HTML tags, or CSS-like properties.
 - Do not use deprecated JSON 2.0 body tags such as `note` or `action`.
 - Do not present `button_group`, `collapsible`, `form_optional`, `_or_` combinations, KPI group, progress bar, funnel, footer, or step list as component tags.
