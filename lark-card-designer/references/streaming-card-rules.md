@@ -4,6 +4,8 @@ Use this file when a Feishu/Lark card will reveal AI-generated text over time, e
 
 These are scenario overlay rules. Do not create a separate `streaming_card` pattern. Apply them to `progress_card` while work is active, then transition to the appropriate result pattern when work completes.
 
+For deadlines, countdowns, elapsed duration, ETA, cooldowns, availability windows, or freshness age, also read `dynamic-time-rules.md`. A changing time value is usually a static time display, threshold state, or component partial update; it is not automatically text streaming.
+
 ## Use Streaming Only When It Helps
 
 Use streaming when one or more conditions apply:
@@ -26,6 +28,8 @@ Avoid streaming when the result is fast, static, approval-only, or when intermed
 | `hybrid` | Text first, then component updates and final replacement | Multi-step agent tasks and AI-assisted workflows |
 
 Prefer the smallest update mode that preserves context and layout stability. Do not repeatedly replace the full card for minor progress changes.
+
+Use `component_partial_update` for a repeatedly refreshed countdown only after `dynamic-time-rules.md` establishes that a live countdown has reader value, an authoritative deadline, credible visible precision, and a defined zero state.
 
 ## State Model
 
@@ -121,3 +125,4 @@ streaming_design:
 - Do not leave the completed card in `generating` or another process-only state.
 - Do not omit stopped, failed, timed-out, blocked, retry, and fallback behavior when those states are possible.
 - Do not place complex approval or form workflows inside an active streaming phase.
+- Do not treat a countdown as text streaming or use streaming timeout as the business deadline.

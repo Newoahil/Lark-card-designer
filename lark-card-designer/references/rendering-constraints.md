@@ -90,10 +90,13 @@ If an implementation owner asks for compatibility review, verify that real JSON 
 
 - Use one primary verified `markdown` or `div` region for progressive output, according to the exact CardKit/authoring-path support.
 - Use component-level updates for steps, charts, button state, or feedback rather than streaming unstable structured content.
+- Treat countdowns and other changing time displays as dynamic-time design. Use a verified text region plus static, threshold, or component-update behavior; do not assume a native countdown component.
+- Keep an authoritative absolute time near a consequential countdown and define zero, stale, delayed-update, and action-lock behavior.
 - Keep update ordering and active-interaction conflicts visible as implementation handoff constraints.
 - Treat shared multi-update behavior, timeout, forwarding restrictions, final closure, content limits, and client fallback as compatibility concerns.
 - Do not include sequence values, API payloads, callback code, or streaming parameter tuning in normal design output.
 - Read `streaming-card-rules.md` for the full design decision and state-transition model.
+- Read `dynamic-time-rules.md` for countdown suitability, precision, thresholds, timezone, zero-state, and fallback decisions.
 
 ## Strict JSON 2.0 Notes
 

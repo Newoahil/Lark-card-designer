@@ -9,6 +9,7 @@
 - 日报、周报、经营汇报卡片
 - 运营分析、经营监控、治理提醒、异常诊断卡片
 - AI 回答流式输出、长任务进度和过程到最终结果的状态设计
+- 倒计时、截止时间、冷却期、预计完成时间、已耗时和数据新鲜度设计
 - 点击受理、处理中、终态、重复点击反馈和澄清卡语义设计
 - 商品数据、SKU、库存、转化、退款等运营卡片
 - 销售数据、目标达成、预测缺口、漏斗和商机卡片
@@ -27,9 +28,11 @@
 - 根据数据类型判断必须展示的关键字段、首屏优先级、折叠字段和可读性控制
 - 判断数据是否适合使用图表、推荐趋势/构成/漏斗/排名/目标缺口等图表意图，并要求非图表降级方案和 `chart_spec` 实施验证
 - 判断哪些关键数字需要标签、层级或短片段颜色强调，并避免把所有数字或正负 delta 装饰化上色
+- KPI 和同级对象对比型分栏默认使用统一的弱中性底色、内边距和列间距建立边界；纯对齐型分栏可保持无底色，不把同级列装饰成多种鲜艳颜色
 - 为运营分析场景补充主语、首要问题、置信度、趋势基线、优先级和下一步动作判断
 - 区分绝对规模与相对贡献，约束分母口径、时间粒度、窗口对比和缺失值语义
 - 为流式卡片选择文本流式、组件局部更新、全量替换或混合模式，并设计稳定区域、异常状态、交互切换和最终态
+- 为动态时间判断是否需要倒计时、显示绝对时间还是相对时间，并约束时间源、时区、精度、刷新策略、阈值、零点状态、按钮联动和陈旧兜底
 - 输出信息架构、组件计划、视觉状态、交互状态和校验清单
 - 细化到内联文字色、标签、字号、间距、表格列、按钮状态等设计约束
 - 细化按钮排布、输入框、选择器、表单布局、校验状态和提交后状态
@@ -139,6 +142,7 @@ visual_rules
 design_constraints
 interaction_rules
 streaming_design（仅流式场景）
+dynamic_time_design（仅倒计时、截止时间、ETA、已耗时或数据新鲜度场景）
 preview_review（仅真实客户端预览规划或评审场景）
 structure_sketch
 design_red_lines
@@ -181,6 +185,7 @@ python C:\Users\<you>\.codex\skills\.system\skill-creator\scripts\quick_validate
 - Daily, weekly, and business report cards
 - Operational analytics, business monitoring, governance reminder, and anomaly diagnosis cards
 - Streaming AI responses, long-running task progress, and process-to-result state design
+- Countdowns, deadlines, cooldowns, ETAs, elapsed duration, and data-freshness design
 - Interaction acceptance, processing, terminal states, duplicate-action feedback, and clarification-card semantics
 - Product, SKU, inventory, conversion, and refund operation cards
 - Sales target, forecast gap, funnel, and opportunity cards
@@ -199,9 +204,11 @@ python C:\Users\<you>\.codex\skills\.system\skill-creator\scripts\quick_validate
 - Identify must-show key fields, first-screen priority, folded fields, and readability controls by data type
 - Decide whether data deserves a chart, recommend trend/composition/funnel/ranking/target-gap chart intent, and require non-chart fallbacks plus implementation-side `chart_spec` verification
 - Decide which key numbers deserve tags, hierarchy, or short-fragment color emphasis while avoiding decorative coloring of every number or delta
+- Default KPI and peer-comparison columns to shared weak neutral backgrounds, padding, and spacing; allow alignment-only columns to stay plain and avoid decorative multicolor sibling columns
 - Add operational analytics rules for primary subject, first question, confidence, trend baseline, priority order, and next-step judgment
 - Distinguish absolute scale from relative contribution and constrain denominator, time grain, window comparison, and missing-value semantics
 - Choose text streaming, component partial updates, full replacement, or hybrid behavior, including stable regions, exception states, interaction transitions, and finalization
+- Decide whether dynamic time needs a countdown, absolute time, relative time, or threshold state, including authority, timezone, precision, refresh policy, zero behavior, action linkage, and stale fallback
 - Produce information architecture, component plans, visual rules, interaction rules, and validation checklists
 - Provide design constraints such as inline text color, tags, typography, spacing, table columns, and button states
 - Specify button layout, input fields, selects, form layout, validation states, and post-action states
@@ -277,6 +284,7 @@ visual_rules
 design_constraints
 interaction_rules
 streaming_design (streaming scenarios only)
+dynamic_time_design (countdown, deadline, ETA, elapsed-time, or freshness scenarios only)
 preview_review (real-client preview planning or review only)
 structure_sketch
 design_red_lines

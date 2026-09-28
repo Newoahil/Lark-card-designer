@@ -54,6 +54,10 @@ component_plan:
 - data_display: KPI group maps to column_set + column + div; table is bounded to actionable rows
 - interactions: button only if view detail or refresh is a verified user action
 - metadata: notation-sized neutral div for source, period, and owner
+
+design_constraints:
+- column_treatment: KPI sibling columns use one shared weak neutral background with modest padding and spacing; stack vertically on narrow screens
+- color_tokens: neutral column background only; reserve chromatic colors for risk/status tags and decisive deltas
 ```
 
 ## Product Data
@@ -258,6 +262,42 @@ interaction_rules:
 - processing_state: show only when downstream work is genuinely asynchronous
 - terminal_states: approved, rejected, returned, cancelled, expired, failed, needs_input
 - audit_or_feedback: approver, time, comment
+```
+
+## Time-Limited Approval
+
+Input: an approval closes in 18 minutes; the deadline is authoritative, and the action becomes unavailable after confirmation of expiry.
+
+```markdown
+card_pattern:
+- name: action_approval_card
+- why: the reader must decide before a consequential deadline
+
+component_plan:
+- content: decision facts and consequence in stable markdown/div regions
+- data_display: dedicated dynamic-time region next to or above the action area
+- interactions: approve/reject/return remain available until confirmed expiry; mobile stacks timer above actions
+
+dynamic_time_design:
+- use_dynamic_time: yes
+- time_role: hard_deadline
+- authority_source: approval service deadline; implementation owner verifies it on every action
+- timezone_policy: show the business timezone and localize only through a verified time path
+- display_mode: absolute_plus_relative
+- absolute_time_display: "Closes at 18:00 China Standard Time"
+- relative_or_countdown_display: minute-level countdown; seconds only in a separately justified final-minute case
+- visible_precision: minutes
+- visible_refresh_policy: update the stable time region at a cadence that supports minute-level accuracy; switch at warning and zero boundaries
+- stable_region: one fixed semantic row above the action area
+- phase_thresholds: active -> warning at 10 minutes -> critical only if the business consequence justifies it -> boundary_reached at zero
+- color_and_emphasis: neutral active; orange warning; red only for confirmed expiry or severe final-window consequence, always with text
+- action_linkage: keep actions available before the boundary; at zero show checking/locking state until the authoritative outcome is confirmed
+- zero_boundary_behavior: boundary_reached -> expired and locked, or active/extended if the service returns a new deadline
+- extension_or_pause_behavior: show the new absolute deadline and an explicit extension label; do not silently reset
+- freshness_tolerance: if visible time is older than the agreed tolerance, replace precision with a stale/checking message
+- stale_or_offline_state: preserve absolute time, last-updated time, and a verified refresh/detail path
+- fallback: static absolute deadline with status text and server-validated actions
+- implementation_constraints: no native countdown component assumed; implementation owns repeated updates, ordering, authoritative time checks, and action enforcement
 ```
 
 ## Retrospective Analysis

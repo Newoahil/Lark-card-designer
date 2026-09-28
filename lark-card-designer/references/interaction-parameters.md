@@ -159,6 +159,8 @@ Every action card should describe what the card becomes after interaction.
 - `already_processed`: repeated action resolves to the stable existing outcome instead of starting another progress state.
 - `expired`: action disabled, history/detail still accessible.
 
+For a deadline, countdown, cooldown, ETA, or elapsed-time display, read `dynamic-time-rules.md`. The displayed time must not be the sole authorization boundary.
+
 ## Action Acceptance And Long-Running Callback States
 
 Separate interaction acceptance from business completion whenever a click can trigger planning, external reads, approval routing, batch work, or another long-running task.
@@ -202,6 +204,21 @@ Implementation-owner constraints for the design handoff:
 - avoid card-update or streaming conflicts while an interaction is active.
 
 State these as compatibility or acceptance constraints only. Do not produce queue architecture, event keys, UUID generation, callback payloads, HTTP handling, SDK code, API calls, or sender/update scripts.
+
+## Dynamic Time And Action Linkage
+
+Use these rules when time changes whether an action is available:
+
+- Show the authoritative absolute deadline near a live countdown for consequential actions.
+- Define action availability for normal, warning, critical, boundary-reached, expired, extended, and stale states.
+- At visible zero, move first to a checking or boundary-reached state when the authoritative outcome is not yet confirmed.
+- Disable or replace the action only according to the confirmed business rule; do not rely on a client-visible timer as the enforcement boundary.
+- If an interaction is received near zero, show `accepted` only after receipt and then resolve to completed, expired, failed, blocked, or another truthful state.
+- State what happens when a deadline passes during processing: continue accepted work, cancel it, or require review.
+- If a deadline is extended, show the new absolute time and extension state instead of silently resetting the countdown.
+- If updates become stale, stop presenting precise remaining time as trustworthy and preserve a refresh, detail, or fallback path when verified.
+
+Keep timer scheduling, authoritative clock validation, concurrency handling, and update calls with the implementation owner.
 
 ## Active Streaming Interaction
 

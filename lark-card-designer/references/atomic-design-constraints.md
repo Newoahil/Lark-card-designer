@@ -21,11 +21,25 @@ Atomic constraints are design intents unless the exact field has been verified f
 Start from neutral. Add color only when a specific semantic job exists.
 
 - `none`: choose when the card is informational, archival, or already clear through structure.
+- `structural_neutral`: default for KPI or comparison-oriented `column_set` layouts; use one shared weak neutral background across sibling columns to clarify grouping without implying status.
 - `header_only`: choose when the whole card has one status, such as pending approval, failed, recovered, or completed.
 - `tags_only`: choose when rows or items have multiple statuses.
 - `inline_only`: choose when 1 to 3 short fragments need local emphasis.
 - `header_plus_tags`: choose for operational dashboards with one overall status and several row/item statuses.
 - Avoid `header_plus_tags_plus_inline` unless there is a strong reason; it often becomes visually loud.
+
+Structural neutral contrast does not license decorative multicolor columns. Different chromatic column backgrounds require distinct state, risk, priority, or outcome semantics.
+
+## Column Treatment
+
+Specify a column treatment whenever `column_set` is part of the proposed design:
+
+- `weak_neutral_contrast`: default for KPI groups, peer comparisons, summary facts, and other visually grouped columns. Use the same subtle neutral background across siblings, modest padding, and clear spacing.
+- `plain_alignment`: use for label-value rows, button placement, compact form fields, or image-text alignment where background blocks would add noise.
+- `semantic_contrast`: use different backgrounds only when sibling columns carry genuinely different states or outcomes; pair each color with an explicit label or tag.
+- `vertical_stack_fallback`: use when narrow screens or long content make side-by-side grouping hard to read.
+
+For JSON 2.0 handoff, `column` supports documented `background_style`, padding, margin, and spacing fields. Treat exact values as implementation constraints that must be checked against the current official component document. Prefer a native neutral enum such as `grey` when verified; avoid arbitrary RGBA values for routine grouping.
 
 ## Inline Text Color
 
@@ -126,8 +140,9 @@ When useful, add this compact block:
 ```markdown
 design_constraints:
 - typography: title=plain_text/heading, body=normal, metadata=notation
-- color_policy: header_plus_tags
+- color_policy: structural_neutral + header_plus_tags
 - color_tokens: header=orange, tag_risk=red
+- column_treatment: KPI/comparison columns=weak_neutral_contrast; alignment-only rows=plain_alignment; mobile=vertical_stack_fallback
 - inline_text_color: omit unless a short delta/status fragment is critical
 - tags: risk=red, pending=orange, archive=neutral
 - table_columns: visible=[name,status,delta,owner], folded=[id,raw_update_time]

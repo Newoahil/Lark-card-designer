@@ -17,6 +17,8 @@ Visual design should make state and hierarchy easier to scan. It should not add 
 - Use inline text color sparingly: usually 0 to 3 short fragments per card.
 - Use tags instead of colored prose when multiple statuses must be scanned.
 - Avoid combining colored header, colored tags, colored inline text, colored icons, and colored backgrounds in the same small card.
+- A shared weak neutral background used to reveal KPI or comparison columns is structural contrast, not a semantic status color. Keep it low contrast and consistent across sibling columns.
+- Different chromatic backgrounds across sibling columns count as semantic colors and require real state, risk, priority, or outcome differences.
 
 ## Status Color Semantics
 
@@ -37,6 +39,23 @@ Use only one dominant status color per card header. Use tags for secondary statu
 - Use inline text color only for short semantic fragments such as status words, risk words, metric deltas, and approval results.
 - Use bold text for labels or conclusions sparingly.
 - If every row is highlighted, nothing is highlighted.
+
+## Column Contrast
+
+- Default KPI groups and peer-comparison columns to subtle container contrast so each column reads as an intentional unit.
+- Use the same light neutral background for sibling columns, with spacing and padding doing most of the separation work.
+- Do not make every column a different color. Chromatic contrast implies meaning and must be reserved for real semantic differences.
+- Omit the background for columns used only as an alignment mechanism, such as label-value rows, button rows, compact forms, or simple image-text layouts.
+- On mobile or narrow layouts, prefer vertical stacking over preserving colored horizontal blocks at the expense of readability.
+
+## Dynamic Time Emphasis
+
+- Keep an active countdown or elapsed-time display neutral by default.
+- Use orange only after a meaningful warning threshold and red only for severe imminent consequence or a confirmed expired/error state.
+- Pair every warning or expiry color with explicit text; never rely on a changing number or color alone.
+- Avoid flashing, pulsing, or recoloring the timer on every update.
+- Do not color a soft ETA as an error merely because the estimate moved.
+- Keep the authoritative absolute time and action consequence more prominent than decorative timer styling.
 
 ## Inline Text Color Rules
 

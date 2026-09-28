@@ -20,6 +20,7 @@ Before using any component name in an implementation-facing mapping, classify it
 | Parameter input | select/input/form | Environment, project, person, date | Many mutually exclusive buttons |
 | Person fields | `person` / `person_list` or readable mention | Applicant, approver, owner | Opaque IDs; invented `user` tags |
 | Source and caveat | notation-sized neutral `div` or concise `markdown` | Data update time, source, limitation | Deprecated `note` tag; competing with the title |
+| Deadline or countdown | verified `div` or `markdown` time region | Time changes action or interpretation | Invented timer tag; second-by-second updates without reader value |
 
 ## Table Rules
 
@@ -28,6 +29,16 @@ Before using any component name in an implementation-facing mapping, classify it
 - Preserve field names, units, sorting, and status columns.
 - Put action columns only when row-level action is expected.
 - Do not convert structured rows into prose before designing the table.
+
+## Column Layout Rules
+
+- Treat `column_set` as a layout component, but make comparison-oriented columns visually legible by default.
+- For KPI groups, peer-object comparisons, summary facts, and other visually grouped columns, default to weak neutral contrast: give sibling `column` containers the same subtle neutral background, modest padding, and clear horizontal spacing.
+- Prefer one shared neutral treatment across peer columns. Do not alternate blue, green, orange, or other chromatic backgrounds merely to make the columns visible.
+- Use different semantic background colors only when the columns represent genuinely different states, risks, priorities, or outcomes. Pair the color with text or a tag.
+- Keep pure alignment rows backgroundless when color blocks would add noise, including label-value rows, button rows, compact form fields, and simple image-text alignment.
+- If the neutral background does not render well or the layout becomes cramped, preserve the grouping through spacing, alignment, labels, or vertical stacking.
+- Verify the exact `background_style`, padding, spacing, and responsive fields against the JSON 2.0 `column_set` document before implementation handoff.
 
 ## Chart Rules
 
@@ -72,6 +83,14 @@ Before using any component name in an implementation-facing mapping, classify it
 - Approvals need applicant, approver, current state, operation time, reason/comment.
 - Sales/product data need unit and field definitions.
 - Knowledge digests need source, publish time, collection time, and link.
+
+## Dynamic Time Rules
+
+- Use `dynamic-time-rules.md` for deadlines, countdowns, ETA, elapsed duration, cooldowns, availability windows, and freshness age.
+- Prefer absolute time for audit and long horizons; add relative time or countdown only when it changes near-term action.
+- Keep one stable time region and pair consequential countdowns with the absolute deadline.
+- Use repeated component updates only when the live display has an authoritative source, credible precision, explicit zero behavior, and a stale fallback.
+- Do not treat `picker_datetime` as a countdown display; it is an input control.
 
 ## Compatibility-Sensitive Components
 

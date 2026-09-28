@@ -1,6 +1,6 @@
 ---
 name: lark-card-designer
-description: "Feishu/Lark card style, JSON 2.0 feasibility, and information-architecture designer for coding workflows. Use when an agent needs to design or review card structure, data presentation, key data, readability, chart suitability, chart type intent, number emphasis, official component compatibility, conservative fallbacks, atomic constraints, restrained visual/status rules, inline color, tags, typography, spacing, buttons, inputs, selects, forms, accepted/processing/final action states, clarification or duplicate-action feedback, non-production component maps, approvals, reports, product or sales cards, daily or weekly reports, operational analytics, governance or anomaly cards, retrospectives, digests, AI streaming, long-running task progress, real-client screenshots, preview comparisons, or CardKit-aware behavior. Guides design decisions, compatibility handoff, render review, and acceptance; does not send cards, call Feishu APIs, generate production JSON or field-level schemas, or modify implementation files."
+description: "Feishu/Lark card style, JSON 2.0 feasibility, and information-architecture designer for coding workflows. Use when an agent needs to design or review card structure, data presentation, key metrics, readability, chart suitability and type intent, number emphasis, official component compatibility, fallbacks, atomic constraints, restrained visual/status rules, inline color, tags, typography, spacing, buttons, inputs, selects, forms, countdowns, deadlines, dynamic time, interaction and action states, clarification or duplicate-action feedback, non-production component maps, approvals, reports, product or sales cards, daily or weekly reports, operational analytics, governance or anomaly cards, retrospectives, digests, AI streaming, long-running progress, real-client screenshots, preview comparisons, or CardKit-aware behavior. Guides design, compatibility handoff, render review, and acceptance; does not send cards, call Feishu APIs, generate production JSON or field-level schemas, or modify implementation files."
 ---
 
 # Lark Card Designer
@@ -25,7 +25,7 @@ Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Mark
 8. Attach restrained visual/status rules. Default to Feishu/Lark native neutral styling. Use color only when it carries status, risk, priority, hierarchy, or action focus.
 9. Add design constraints when the output will guide handoff or review. Keep them scoped to the components actually used and express unverified field details as design intent, not guessed syntax.
 10. Add interaction parameters only when the reader needs to decide, approve, select, input, refresh, filter, or give feedback. For long-running actions, separate accepted, processing, and terminal semantics; define visible duplicate-action feedback and side-effect boundaries.
-11. Add streaming design only when progressive text, repeated component updates, or long-running task state has reader value.
+11. Add streaming design only when progressive text, repeated component updates, or long-running task state has reader value. Add dynamic-time design when a deadline, countdown, elapsed duration, ETA, cooldown, availability window, or freshness age changes interpretation or action.
 12. When screenshots, recordings, or real-client preview acceptance are requested, review the rendered evidence and keep observed issues separate from inferred risks. The implementation owner performs rendering and delivery.
 13. Output a Markdown explanation followed by a stable structured decision block.
 14. Finish with compatibility red lines, scenario-specific design red lines, and a validation checklist.
@@ -40,6 +40,7 @@ Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Mark
 - For daily/weekly reports, product data, sales data, digests, approvals, and retrospectives, read [card-patterns.md](references/card-patterns.md).
 - For operational analytics, daily operations, governance reminders, anomaly diagnosis, product group analysis, or sameSkuGroup analysis, read [operational-analytics-rules.md](references/operational-analytics-rules.md).
 - For AI text streaming, long-running tasks, repeated component updates, progress states, or process-to-result transitions, read [streaming-card-rules.md](references/streaming-card-rules.md).
+- For countdowns, deadlines, elapsed duration, ETA, cooldown, availability windows, freshness age, time precision, zero-boundary behavior, or timer/action linkage, read [dynamic-time-rules.md](references/dynamic-time-rules.md).
 - For `table`, conditional `chart`, `button`, `form`, image, folded-detail, metadata-note, and footer-intent choices, read [component-rules.md](references/component-rules.md).
 - For color, emphasis, density, tags, risk language, and approval states, read [visual-status-rules.md](references/visual-status-rules.md).
 - For design handoff constraints such as inline text color, tags, typography, spacing, table columns, button states, and fallback behavior, read [atomic-design-constraints.md](references/atomic-design-constraints.md).
@@ -129,6 +130,7 @@ design_constraints:
 - typography:
 - spacing:
 - color_tokens:
+- column_treatment:
 - table_columns:
 - tag_variants:
 - button_states:
@@ -181,6 +183,9 @@ validation_checklist:
 - [ ] no fields, enum values, Markdown extensions, HTML tags, or CSS-like properties are guessed
 - [ ] any implementation JSON uses schema 2.0 and body.elements; the design handoff itself remains a non-JSON component map
 - [ ] component choice matches the data shape
+- [ ] KPI and comparison-oriented column groups default to one shared weak neutral background with adequate padding and spacing
+- [ ] columns used only for label-value, button, form, or image-text alignment may remain backgroundless
+- [ ] sibling columns use different chromatic backgrounds only when they represent real semantic differences, with text or tags carrying the same meaning
 - [ ] tables are bounded or folded
 - [ ] any used status colors carry semantic meaning
 - [ ] inline text color is omitted unless local semantic emphasis is needed
@@ -189,6 +194,8 @@ validation_checklist:
 - [ ] repeated actions receive a visible stable state, and clarification selections are not described as already executed
 - [ ] side-effect boundaries and whether the reader may leave are clear when relevant
 - [ ] streaming cards use one primary streaming region, explicit exception states, and a stable final-result pattern when relevant
+- [ ] dynamic time defines its authority, timezone, display mode, visible precision, refresh policy, zero-boundary behavior, stale fallback, and action linkage when relevant
+- [ ] countdowns map to a static or repeatedly updated verified text region rather than an invented timer component, and text streaming is used only for progressive text
 - [ ] input/select/form controls have labels, defaults, validation, and empty/error states when used
 - [ ] source, period, owner, or audit fields are present when needed
 - [ ] mobile reading density is acceptable
@@ -196,6 +203,8 @@ validation_checklist:
 ````
 
 For real-client preview planning or review, append the conditional `preview_review` block from [visual-preview-review-rules.md](references/visual-preview-review-rules.md). Do not include it for every low-risk card. If no real render is available, label the result as pre-render design review rather than visual acceptance.
+
+For a deadline, countdown, elapsed duration, ETA, cooldown, availability window, or freshness age that changes interpretation or action, append the conditional `dynamic_time_design` block from [dynamic-time-rules.md](references/dynamic-time-rules.md). Do not classify a changing time value as text streaming unless the content itself is progressively revealed text.
 
 For review of an existing card, lead with design red lines, risks, and improvement directions, then include the structured decision block only if a revised design direction is needed.
 
@@ -216,6 +225,7 @@ For review of an existing card, lead with design red lines, risks, and improveme
 - Do not sacrifice "Information Order" or "Context Integrity" for "Simplicity". If data is too wide for mobile, pivot to vertical stacking instead of deleting columns.
 - Do not use emojis in Agent, technical, or professional approval contexts.
 - Do not use color as decoration without semantic status.
+- Do not interpret weak neutral column contrast as permission to make every sibling column a different chromatic color.
 - Do not use color just because a color field exists in the output shape.
 - Do not use more than one dominant color family unless the data contains multiple independent statuses that must be compared.
 - Do not color full paragraphs when a tag, key number, or short status phrase would carry the emphasis better.
@@ -225,6 +235,8 @@ For review of an existing card, lead with design red lines, risks, and improveme
 - Do not leave an accepted or processing action without a terminal or needs-input state.
 - Do not label aggregate-window comparisons as a continuous time trend.
 - Do not expose raw tool logs or hidden reasoning as streaming progress.
+- Do not invent a native countdown/timer component or classify every changing time value as text streaming.
+- Do not show a countdown without an authoritative deadline, absolute-time fallback, stale behavior, and explicit zero-state semantics.
 - Do not claim visual acceptance from JSON, source code, or a structure sketch without real-client render evidence.
 - Do not include real Feishu/Lark IDs, credentials, webhook URLs, recipient identifiers, or production callback actions in preview-review artifacts.
 - Do not omit period, unit, source, owner, or audit fields when the data depends on them.

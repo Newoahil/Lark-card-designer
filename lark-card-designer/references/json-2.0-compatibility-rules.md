@@ -99,6 +99,7 @@ Never use these as JSON 2.0 body tags:
 - `form_optional`: conceptual only. Use `form` only when actual input submission is required.
 - `chart_or_markdown`, `chart_or_table`, `markdown_or_rich_text`, `markdown_or_note`, `markdown_or_step_list`, `column_set_or_table`, and any other `_or_` tag: choose one real component after evaluating the data shape.
 - KPI block, KPI column, step list, progress bar, bullet chart, funnel chart, card footer, and metadata note: conceptual patterns that must map to real components.
+- Countdown, timer, elapsed-time counter, and SLA clock: conceptual dynamic-time patterns, not established JSON 2.0 body tags. Map them to verified text components and static or repeated update behavior only after reading `dynamic-time-rules.md`.
 
 ## Style And Field Guardrails
 
@@ -126,6 +127,7 @@ Use the first fallback that preserves the reader's decision:
 | Rich layout | verified `column_set` | vertical stack |
 | Unsupported media | verified `img`, `img_combination`, or conditional `audio` | title, description, and source link |
 | Unverified interaction | verified `button`, select, input, or form component | read-only content plus explicit detail link or external action path |
+| Countdown or dynamic time | verified `markdown` or `div` time region with implementation-owned updates | authoritative absolute time plus last-updated or stale-state text |
 
 ## Required Feasibility Output
 

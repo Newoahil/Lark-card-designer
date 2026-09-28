@@ -34,6 +34,7 @@ if (-not (Test-Path -LiteralPath $skillRoot -PathType Container)) {
 $requiredFiles = @(
     "SKILL.md",
     "references/data-visualization-rules.md",
+    "references/dynamic-time-rules.md",
     "references/json-2.0-compatibility-rules.md",
     "references/pattern-structure-sketches.md"
 )
@@ -68,7 +69,7 @@ foreach ($relativePath in @(
 }
 
 $blockedConceptPattern = 'json_2_0_like|chart_or_markdown|chart_or_table|markdown_or_rich_text|markdown_or_note|markdown_or_step_list|column_set_or_table|button_group(?:_optional)?|form_optional'
-$blockedTagPattern = '"tag"\s*:\s*"(?:note|action|collapsible|button_group(?:_optional)?|form_optional|chart_or_markdown|chart_or_table|markdown_or_rich_text|markdown_or_note|markdown_or_step_list|column_set_or_table)"'
+$blockedTagPattern = '"tag"\s*:\s*"(?:note|action|collapsible|countdown|timer|button_group(?:_optional)?|form_optional|chart_or_markdown|chart_or_table|markdown_or_rich_text|markdown_or_note|markdown_or_step_list|column_set_or_table)"'
 $rootElementsPattern = '^\s*"elements"\s*:'
 $findings = [System.Collections.Generic.List[string]]::new()
 
@@ -110,9 +111,12 @@ for ($index = 0; $index -lt $patternSketchLines.Count; $index++) {
 $skillText = Get-Content -Raw -LiteralPath (Join-Path $skillRoot "SKILL.md") -Encoding utf8
 foreach ($requiredText in @(
     "data-visualization-rules.md",
+    "dynamic-time-rules.md",
     "json-2.0-compatibility-rules.md",
     "chart_decision:",
     "number_emphasis_rules:",
+    "column_treatment:",
+    "dynamic_time_design",
     "feasibility_check:",
     "official_components:",
     "conditional_components:",
