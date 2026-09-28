@@ -130,6 +130,8 @@ C:\Users\<you>\.codex\skills\lark-card-designer
 skill 默认输出 Markdown 说明和结构化决策块：
 
 ```text
+fact_basis
+evidence_status
 card_intent
 card_pattern
 information_architecture
@@ -272,6 +274,8 @@ It mirrors and verifies the Skill in `~\.codex\skills\lark-card-designer` and `~
 The skill returns Markdown plus a structured decision block:
 
 ```text
+fact_basis
+evidence_status
 card_intent
 card_pattern
 information_architecture

@@ -113,6 +113,8 @@ foreach ($requiredText in @(
     "data-visualization-rules.md",
     "dynamic-time-rules.md",
     "json-2.0-compatibility-rules.md",
+    "fact_basis:",
+    "evidence_status:",
     "chart_decision:",
     "number_emphasis_rules:",
     "column_treatment:",

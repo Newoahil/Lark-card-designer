@@ -16,13 +16,13 @@ The goal is not to show less data. The goal is to put the decisive data first, k
    - object or scope
    - magnitude, unit, and comparison baseline
    - risk, anomaly, or priority
-   - owner, deadline, or next action
-   - source, period, update time, or audit trail
+    - owner, deadline, or next action when provided and relevant
+    - source, period, update time, or audit trail when the decision depends on them and input provides them
 3. Keep the first screen bounded:
-   - one conclusion or state sentence
-   - 3 to 5 primary metrics or facts
-   - one top risk, anomaly, or required action
-   - source/period/update time when trust depends on it
+    - one conclusion or state sentence
+    - 3 to 5 primary metrics or facts
+    - one top risk, anomaly, or required action
+    - input-provided source/period/update time when trust depends on it; otherwise keep an explicit placeholder or omit the unavailable field
 4. Fold or link secondary data:
    - raw rows beyond the first useful page
    - IDs, logs, historical details, evidence chains, or debug output
@@ -34,30 +34,30 @@ The goal is not to show less data. The goal is to put the decisive data first, k
 
 | Data type | Must show | First-screen priority | Fold or link | Readability control |
 | --- | --- | --- | --- | --- |
-| Scalar KPI | metric name, value, unit, period, baseline | value, delta, status, target gap | calculation detail, historical series | KPI block plus short explanation |
-| Time series | period, metric, current value, trend, comparison | trend direction, anomaly, latest value | full time table, old periods | chart or compact trend; avoid many date columns |
-| Composition / contribution | numerator object, denominator/scope, share, period, comparison | relative position, share change, stage gap | raw numerator/denominator rows, calculation detail | composition or multi-series trend with explicit denominator |
-| Detail rows / table | row identity, status, key value, owner/action | top risky/actionable rows | raw IDs, low-priority columns, long notes | native table; 5 to 10 visible rows |
+| Scalar KPI | metric name, value, unit; period/baseline when provided and needed | value, delta, status, target gap | calculation detail, historical series | KPI block plus short explanation |
+| Time series | metric, current value, trend, comparison; period when provided and needed | trend direction, anomaly, latest value | full time table, old periods | chart or compact trend; avoid many date columns |
+| Composition / contribution | numerator object, denominator/scope, share, comparison; period when provided and needed | relative position, share change, stage gap | raw numerator/denominator rows, calculation detail | composition or multi-series trend with explicit denominator |
+| Detail rows / table | row identity, status, key value; owner/action when provided and relevant | top risky/actionable rows | raw IDs, low-priority columns, long notes | native table; 5 to 10 visible rows |
 | Top-N ranking | rank, item name, metric, change, reason/status | top movers, top risks, best/worst | complete ranking, raw evidence | Top-N list/table; sort key explicit |
 | Product data | SKU/category, inventory, sales, conversion, margin/refund, status | scope, health, anomaly, Top/Bottom products | full SKU table, image-heavy detail | KPI + Top-N + bounded SKU table |
-| Sales data | revenue/order, target, forecast, pipeline stage, region/channel, owner | target achievement, forecast gap, risk, biggest movement | customer/opportunity rows unless actionable | KPI + trend/funnel + action rows |
-| Article/blog/news digest | title, source, publish/collect time, summary, priority, link | must-read items, why it matters | full article body, long excerpts | categorized list with tags and links |
-| Approval/process object | object, applicant, state, amount/scope, reason, deadline, risk | decision object, current state, consequence, primary action | full history, raw policy text | facts block + action area + audit footer |
-| Alert/status | severity, impacted object, cause, time, mitigation | current status, impact, required action | full logs, secondary context | status header + short mitigation path |
-| Long-running progress | current step, state, blocker, next update, latest result | current state and next expected event | long tool output, old steps | conceptual step summary mapped to `markdown`/`div`; conditional `collapsible_panel` logs or detail link |
+| Sales data | revenue/order, target, forecast, pipeline stage, region/channel; owner when provided and relevant | target achievement, forecast gap, risk, biggest movement | customer/opportunity rows unless actionable | KPI + trend/funnel + action rows |
+| Article/blog/news digest | title, summary, priority, link; source and publish/collect time when provided | must-read items, why it matters | full article body, long excerpts | categorized list with tags and links |
+| Approval/process object | object, applicant, state, amount/scope, reason, deadline, risk when provided and relevant | decision object, current state, consequence, primary action | full history, raw policy text | facts block + action area + audit footer |
+| Alert/status | severity, impacted object, cause, mitigation; time when provided and relevant | current status, impact, required action | full logs, secondary context | status header + short mitigation path |
+| Long-running progress | current step, state, blocker, latest result; next update when provided and relevant | current state and next expected event | long tool output, old steps | conceptual step summary mapped to `markdown`/`div`; conditional `collapsible_panel` logs or detail link |
 | Agent/permission | requester/agent, permission scope, resource, risk, expiry, audit | identity, scope, impact, approve/reject decision | raw permission JSON, full policy docs | technical facts table; no decorative language |
 
 ## Intent-Specific Key Data
 
 | Intent | Promote | Avoid promoting |
 | --- | --- | --- |
-| Report | conclusion, KPI, delta, period, source | row-level details before the result |
+| Report | conclusion, KPI, delta; period/source when provided and needed | row-level details before the result |
 | Diagnose | conclusion, baseline, evidence, cause confidence | cause statements without evidence |
 | Decide | tradeoff, risk, consequence, recommended action | neutral summaries with no decision point |
-| Execute | object, state, owner, deadline, enabled action | explanations that bury the button |
-| Warn | severity, impact, mitigation, update time | decorative urgency or vague alarm words |
-| Preserve knowledge | topic, priority, source, link, why it matters | unsourced summaries or full article dumps |
-| Track progress | current step, blocker, next update, final target | every historical log line |
+| Execute | object, state, enabled action; owner/deadline when provided and relevant | explanations that bury the button |
+| Warn | severity, impact, mitigation; update time when provided and relevant | decorative urgency or vague alarm words |
+| Preserve knowledge | topic, priority, link, why it matters; source when provided | unsourced summaries or full article dumps |
+| Track progress | current step, blocker, final target; next update when provided and relevant | every historical log line |
 
 ## Readability Rules
 
@@ -65,7 +65,7 @@ The goal is not to show less data. The goal is to put the decisive data first, k
 
 - Lead with the answer, state, or required action before raw data.
 - Use 3 to 5 key facts for the primary summary. If more facts are required, group them into sections.
-- Put period, scope, unit, source, and update time close to the metric group, not hidden in a distant appendix.
+- Put input-provided period, scope, unit, source, and update time close to the metric group when they are needed, not hidden in a distant appendix; leave unavailable fields as explicit placeholders or omit them.
 - Keep action cards especially direct: object, risk/consequence, deadline, action.
 
 ### Numbers And Metrics
@@ -87,7 +87,7 @@ The goal is not to show less data. The goal is to put the decisive data first, k
 
 ### Tables
 
-- Use visible columns for identity, status, decisive metric, owner/action, and update time.
+- Use visible columns for identity, status, and decisive metric; include owner/action and update time only when input-provided and relevant.
 - Move raw IDs, debug fields, long comments, and secondary metrics to folded detail.
 - Default visible rows to the smallest useful set, usually 5 to 10.
 - If a table has more than 3 important columns on mobile, pivot secondary columns into stacked label/value text or folded detail.
@@ -124,7 +124,7 @@ When useful, add this compact block:
 
 ```markdown
 key_data_rules:
-- must_show: [period, scope, primary_metric, unit, baseline, source]
+- must_show: [primary_metric, unit, period_if_provided, baseline_if_provided, source_if_provided]
 - first_screen_priority: [conclusion, 3_to_5_kpi, top_risk, next_action]
 - folded_or_linked: [raw_rows, audit_history, long_notes]
 - readability_controls: [bounded_table, visible_units, mobile_vertical_stack]

@@ -21,7 +21,7 @@ Use for management reporting, business health, decision summaries, and high-leve
 ```text
 Design handoff component map only; not production-sendable Feishu JSON.
 card
-  header (top-level): period + scope + conclusion; neutral or one semantic status intent
+  header (top-level): input-provided period and scope when relevant, plus conclusion; neutral or one semantic status intent; omit unavailable slots or use explicit placeholders
   body.elements
     markdown: one-sentence conclusion and decision point
     KPI group (conceptual)
@@ -46,7 +46,7 @@ Use for daily/weekly operations, product operations, sales operations, anomalies
 ```text
 Design handoff component map only; not production-sendable Feishu JSON.
 card
-  header (top-level): period + scope + health/status
+  header (top-level): input-provided period and scope when relevant, plus health/status; omit unavailable slots or use explicit placeholders
   body.elements
     markdown: what changed and what needs attention
     KPI group (conceptual)
@@ -62,12 +62,12 @@ card
       conditional mapping for JSON authoring: collapsible_panel
       fallback: detail link or separate detail card
     metadata note (conceptual)
-      mapping: notation-sized neutral div with source, owner, and update time
+      mapping: notation-sized neutral div listing only input-provided source, owner, and update time; omit unavailable slots or use explicit placeholders, never fill values from field names
 ```
 
-Product variant: make row identity SKU/category; prioritize inventory, sales, conversion, margin/refund, status, and owner.
+Product variant: make row identity SKU/category; prioritize inventory, sales, conversion, margin/refund, and status; include owner only when input-provided and relevant.
 
-Sales variant: prioritize revenue/orders, target, forecast gap, funnel stage, region/channel, and owner.
+Sales variant: prioritize revenue/orders, target, forecast gap, funnel stage, and region/channel; include owner only when input-provided and relevant.
 
 ## Digest Card
 
@@ -76,12 +76,12 @@ Use for blog, article, research, industry news, and knowledge aggregation.
 ```text
 Design handoff component map only; not production-sendable Feishu JSON.
 card
-  header (top-level): topic + collection period; normally neutral
+  header (top-level): topic plus collection period only when input-provided and relevant; otherwise omit it or use an explicit placeholder; normally neutral
   body.elements
     markdown: why this collection matters
     must-read article group (conceptual)
       mapping: markdown or repeated div items
-      fields by intent: title, summary, source, time, priority label, link
+      fields by intent: title, summary, source, time, priority label, link; list only input-provided fields, omitting unavailable slots or using explicit placeholders
     optional article group (conceptual)
       mapping: markdown or repeated div items with lower visual emphasis
     archive or related material
@@ -121,7 +121,7 @@ card
       conditional mapping for JSON authoring: collapsible_panel
       fallback: summary + detail link
     terminal audit state
-      mapping: div or markdown showing outcome, operator, time, and comment
+      mapping: div or markdown listing only input-provided outcome, operator, time, and comment; omit unavailable slots or use explicit placeholders, never fill values from field names
 ```
 
 Always specify the interaction state model:
@@ -152,13 +152,13 @@ card
       fallback: markdown comparison with explicit baseline
     markdown: cause hypothesis with evidence boundary
     corrective actions
-      mapping: bounded table with action, owner, deadline, and state
+      mapping: bounded table listing only input-provided action, owner, deadline, and state; omit unavailable slots or use explicit placeholders, never fill values from field names
       fallback: compact markdown list
     raw data, logs, timeline, or references
       conditional mapping for JSON authoring: collapsible_panel
       fallback: detail link or separate appendix card
     metadata note (conceptual)
-      mapping: notation-sized neutral div with source, limitation, and update time
+      mapping: notation-sized neutral div listing only input-provided source, limitation, and update time; omit unavailable slots or use explicit placeholders, never fill values from field names
 ```
 
 ## Alert Card
@@ -171,7 +171,7 @@ card
   header (top-level): severity + impacted object; one semantic status intent
   body.elements
     markdown: current status, impact, and likely cause
-    div or markdown: mitigation and next update time
+    div or markdown: input-provided mitigation and next update time only; omit unavailable slots or use explicit placeholders, never fill values from field names
     actions, only when the reader has a valid next step
       mapping: individual button components
       fallback: one detail link
@@ -202,7 +202,7 @@ card
       conditional mapping for JSON authoring: collapsible_panel
       fallback: concise summary + detail link
     metadata note (conceptual)
-      mapping: notation-sized neutral div with run stats, source, update time, and fallback state
+      mapping: notation-sized neutral div listing only input-provided run stats, source, update time, and fallback state; omit unavailable slots or use explicit placeholders, never fill values from field names
 ```
 
 Keep the header and primary content region stable during updates. On completion, close streaming, remove generating language, and switch to the appropriate result-oriented pattern. CardKit update operations, element IDs, sequencing, and send behavior remain implementation responsibilities.

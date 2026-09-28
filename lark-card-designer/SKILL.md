@@ -27,8 +27,37 @@ Do not act as a sender, SDK, webhook wrapper, template marketplace, generic Mark
 10. Add interaction parameters only when the reader needs to decide, approve, select, input, refresh, filter, or give feedback. For long-running actions, separate accepted, processing, and terminal semantics; define visible duplicate-action feedback and side-effect boundaries.
 11. Add streaming design only when progressive text, repeated component updates, or long-running task state has reader value. Add dynamic-time design when a deadline, countdown, elapsed duration, ETA, cooldown, availability window, or freshness age changes interpretation or action.
 12. When screenshots, recordings, or real-client preview acceptance are requested, review the rendered evidence and keep observed issues separate from inferred risks. The implementation owner performs rendering and delivery.
-13. Output a Markdown explanation followed by a stable structured decision block.
-14. Finish with compatibility red lines, scenario-specific design red lines, and a validation checklist.
+13. Output a Markdown explanation followed by a stable structured decision block. Cross-check explanation copy and the structure sketch section by section against business facts, ensuring strict consistency with inputs and assumptions; do not substitute merely listing red lines for section-by-section fact checking.
+14. Execute the Fact and Consistency Gate and the Evidence Status Gate, finishing with compatibility red lines, scenario-specific design red lines, and a validation checklist containing only applicable items.
+
+## Delivery Gates
+
+Execute two delivery gates in sequence before finalizing output:
+
+1. **Fact and Consistency Gate**:
+   - Strictly isolate input facts, explicit assumptions, and proposed behaviors; never upgrade them across boundary levels. Cross-check business facts across card copy, headers, body, markdown, KPIs, and `structure_sketch` section by section to ensure every fact traces back to input facts or deterministic derivation.
+   - **Fact scope closure and field role preservation**: Business entities, actors/owners, states, outcomes, timestamps, and side effects must originate only from `provided_facts`. When the structure genuinely requires preserving an actor role slot, use a role-consistent placeholder (such as `<owner>`); otherwise omit it directly. `derived_facts` records only explicit, recalculable numbers, ratios, or formatting derivations, without adding business semantics or altering field roles: `12 - 2 = 10` is an allowed numeric derivation, but must never be labeled as "10 verified / no errors"; a date provided only as "Sep 21" must not be given an assumed year. Values derived from subtraction must be named strictly by their literal numeric meaning (such as "SKU count excluding pending discrepancies"), never described as "settled", "verified", "normal", or "no discrepancies"; sums, ratios, and format conversions remain permitted under these rules. `update_time` is not completion time; `completed` indicates only that the named action ended, not that it passed or has no outstanding items. Assertions of persistence or notification—such as persisted to DB, archived, notified, synchronized, auto-refreshing, or viewable anytime—must also originate from `provided_facts`, and must be omitted when not provided. Reference slots for owner/source/time/outcome in reference files are layout slots, not authorization to populate concrete values.
+   - If state, root cause, scope, update time, timeout mechanisms, permissions, side effects, or personalized behavior are unprovided or unverified, maintain measured expressions such as `unknown`, `conditional`, or `proposed`. Do not invent update times or scopes, and never fabricate automated self-healing.
+   - Do not demand clarification questions for every unknown variable; use explicit placeholders (such as `<pending_confirmation>`) or omit unprovided fields entirely without blocking design progress. Never fabricate placeholder fields merely to satisfy layout symmetry or `key_data_rules.must_show` source/audit/period requirements.
+   - Mock sample data is permitted, but must be explicitly labeled in-place in copy and sketches (such as `[sample: 12 items]`, `<mock>`); never rely solely on a vague mention in earlier assumptions while presenting mock data as actual facts in sketches or copy.
+   - Before delivery, cross-check conclusions, `interaction_rules`, time semantics, `terminal/final` states, and `structure_sketch` to ensure identical business semantics and eliminate internal contradictions.
+
+2. **Evidence Status Gate**:
+   - Default `evidence_status` to `pre_render_design`; mark as `real_client_evidence` only when actual client screenshots or screen recordings are obtained (and having real evidence does not imply that all items pass).
+   - Strictly distinguish four verification states: verified at the design layer (`checked`), pending implementation verification (`pending_implementation`), pending real client render verification (`pending_real_render`), and not applicable (`not_applicable`, omitted directly from the checklist).
+   - `validation_checklist` outputs only items applicable to the current scenario; evidence for `checked` must be an input-provided fact or an objectively verifiable structural fact in the sketch/plan. Never use empty claims like "self-checked" or "considered" as evidence. In the absence of matching real-client rendering evidence (real screenshots or recordings), visual rendering items such as mobile density must never be marked `checked`, and must remain `pending_real_render`. `checked` is strictly bounded by the actual scope of available evidence and cannot be inferred across the board from partial rendering evidence.
+   - Do not mandate client screenshots for all cards, do not create artificial approval walls, and never guess missing facts to satisfy structured fields.
+
+### Gate Positive and Negative Examples
+
+- **Example 1 (Unknown anomaly state)**: Input states "5 datasource timeouts, 3 credential expiries; recovery status not provided".
+  - *Correct*: Copy and sketch objectively state "5 timeouts, 3 credential expiries; recovery status pending confirmation"; unprovided data source and update time are omitted or marked `<pending_confirmation>`; retry action is labeled as proposed.
+  - *Violation*: Header text notes unrecovered status, but sketch or metadata sneaks in unauthorized fabricated facts like "System automatically degraded" or "Agent task dispatch center, data archived in terminal state".
+- **Example 2 (Read-only review task)**: Input states "Read-only reconciliation review, typical duration 2-5 min".
+  - *Correct*: Terminal state and interactions state only "Review completed; discrepancy results subject to actual return (or pending confirmation)"; 2-5 min is labeled as an expected duration range; no balance adjustment or automatic reconciliation is added.
+  - *Violation*: Terminal copy states "12 discrepancies checked and balanced", or declares "final reconciliation triggered by terminal action" in side_effect/actions, escalating a read-only review into automated account balancing.
+- **Example 3 (Unprovided fields)**: Data source or update time is not supplied.
+  - *Correct*: Omit the display item directly, or use a `<pending_confirmation>` placeholder; do not invent fake data to populate fields, and do not inflate every card with exhaustive fact tables.
 
 ## Reference Routing
 
@@ -60,6 +89,14 @@ Start with 2 to 5 sentences explaining the key design judgment and any assumptio
 
 ````markdown
 **structured_decision**
+
+fact_basis:
+- provided_facts:
+- derived_facts: # optional; explicit numeric or format derivations only, no added business semantics
+- unknowns_or_placeholders:
+- proposed_behaviors:
+
+evidence_status: pre_render_design | real_client_evidence
 
 card_intent:
 - data_type:
@@ -166,43 +203,13 @@ design_red_lines:
 - scenario_specific_failure_modes:
 
 validation_checklist:
-- [ ] first screen states the point
-- [ ] required key data for this data type is visible
-- [ ] operational analytics cards define the primary subject, reader first question, confidence, priority order, and supported next step when relevant
-- [ ] relative-position or contribution claims show the denominator/scope and use a valid comparison grain
-- [ ] key numbers include period, unit, and baseline when needed
-- [ ] chart_decision explains whether a chart is useful, which business question it answers, and why KPI/table is not enough or is better
-- [ ] recommended chart type matches the data shape and uses compatible grain, denominator, scope, unit, and series definitions
-- [ ] every chart remains conditional until `chart_spec`, component fields, client behavior, and real render are verified, with a non-chart fallback
-- [ ] number_emphasis_rules identify only decision-changing values for tag, bold, or inline color emphasis
-- [ ] positive/negative colors follow the metric's business direction, especially inverse metrics such as refund rate, defect rate, cost, latency, or risk count
-- [ ] feasibility check classifies official, conditional, conceptual-only, and unsupported/unverified capabilities
-- [ ] every implementation-facing component name is an official JSON 2.0 tag or a clearly labeled nested tag
-- [ ] conceptual names are mapped to real components and never presented as JSON tags
-- [ ] conditional components include authoring-path, client, resource, nesting, chart-spec, or interaction constraints and a fallback
-- [ ] no fields, enum values, Markdown extensions, HTML tags, or CSS-like properties are guessed
-- [ ] any implementation JSON uses schema 2.0 and body.elements; the design handoff itself remains a non-JSON component map
-- [ ] component choice matches the data shape
-- [ ] KPI and comparison-oriented column groups default to one shared weak neutral background with adequate padding and spacing
-- [ ] columns used only for label-value, button, form, or image-text alignment may remain backgroundless
-- [ ] sibling columns use different chromatic backgrounds only when they represent real semantic differences, with text or tags carrying the same meaning
-- [ ] tables are bounded or folded
-- [ ] any used status colors carry semantic meaning
-- [ ] inline text color is omitted unless local semantic emphasis is needed
-- [ ] actions, button layout, and disabled/accepted/processing/final states are clear
-- [ ] long-running actions separate accepted from completed, define truthful processing only when needed, and include complete terminal or needs-input states
-- [ ] repeated actions receive a visible stable state, and clarification selections are not described as already executed
-- [ ] side-effect boundaries and whether the reader may leave are clear when relevant
-- [ ] streaming cards use one primary streaming region, explicit exception states, and a stable final-result pattern when relevant
-- [ ] dynamic time defines its authority, timezone, display mode, visible precision, refresh policy, zero-boundary behavior, stale fallback, and action linkage when relevant
-- [ ] countdowns map to a static or repeatedly updated verified text region rather than an invented timer component, and text streaming is used only for progressive text
-- [ ] input/select/form controls have labels, defaults, validation, and empty/error states when used
-- [ ] source, period, owner, or audit fields are present when needed
-- [ ] mobile reading density is acceptable
-- [ ] real-client preview evidence is requested when rendering-dependent risk cannot be resolved from a structure sketch
+# Output only applicable items for the current scenario, selected from the candidate list in references/evaluation-cases.md. Omit non-applicable items directly. Distinguish three active states: checked, pending_implementation, pending_real_render. Checked items must be supported by input facts or objectively verifiable design facts; never use claims like "self-checked/considered". Visual rendering items must not be marked checked without corresponding real-client render evidence.
+- item:
+  status: checked | pending_implementation | pending_real_render
+  evidence_scope:
 ````
 
-For real-client preview planning or review, append the conditional `preview_review` block from [visual-preview-review-rules.md](references/visual-preview-review-rules.md). Do not include it for every low-risk card. If no real render is available, label the result as pre-render design review rather than visual acceptance.
+For real-client preview planning or review, append the conditional `preview_review` block from [visual-preview-review-rules.md](references/visual-preview-review-rules.md). Do not include it for every low-risk card. Evidence status defaults to `pre_render_design`; mark as `real_client_evidence` only when actual client screenshots or recordings are provided (having evidence does not imply all checks pass). If no real render is available, label the result as pre-render design review rather than visual acceptance.
 
 For a deadline, countdown, elapsed duration, ETA, cooldown, availability window, or freshness age that changes interpretation or action, append the conditional `dynamic_time_design` block from [dynamic-time-rules.md](references/dynamic-time-rules.md). Do not classify a changing time value as text streaming unless the content itself is progressively revealed text.
 
@@ -240,4 +247,6 @@ For review of an existing card, lead with design red lines, risks, and improveme
 - Do not claim visual acceptance from JSON, source code, or a structure sketch without real-client render evidence.
 - Do not include real Feishu/Lark IDs, credentials, webhook URLs, recipient identifiers, or production callback actions in preview-review artifacts.
 - Do not omit period, unit, source, owner, or audit fields when the data depends on them.
+- Do not violate the Fact and Consistency Gate: do not escalate input facts, explicit assumptions, or proposed behaviors across boundary levels; keep unprovided/unverified items as unknown, conditional, proposed, or explicit placeholders; never fabricate self-healing, invent data, or introduce conflicting business semantics.
+- Do not violate the Evidence Status Gate: do not claim visual acceptance or mark rendering-dependent items as checked without corresponding real-client render evidence (checked covers only the proven scope and cannot be generalized from partial renders); do not mandate screenshots or erect approval walls for simple cards; never guess facts to populate structural fields.
 - Do not output complete production JSON, field-level schemas, API calls, callback handlers, auth logic, or implementation patches as this skill's main product.

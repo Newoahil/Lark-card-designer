@@ -27,6 +27,10 @@ For each case, compare the output against expected pattern, key data, component 
 | Chart recommendation | Trend, composition, funnel, or target-gap visual | original scenario pattern with conditional chart | business question, chart type intent, compatible data grain, `chart_spec` verification requirement, non-chart fallback | chart is called sendable or compatible from the `chart` tag alone; fabricated VChart fields or no fallback |
 | Chart rejection | Single KPI, article digest, approval amount, or raw rows without a visual question | original scenario pattern without chart | explicit `chart_decision.should_use_chart: no` or equivalent, reason why KPI/table/text is clearer | decorative chart is added; chart chosen because data is numeric only |
 | Number emphasis | Deltas, threshold breaches, inverse metrics, risk counts, missing/low-confidence values | original scenario pattern plus number emphasis rules | emphasized values, method, color semantics, metric direction, numbers not emphasized | every number is colored; positive/negative color ignores metric direction; color carries meaning without text/tag |
+| Daily report datasource timeouts with expired credentials (Case A) | 5 datasource timeouts, 3 credential expiries, source, update time, and recovery status omitted | `alert_card` or `ops_dashboard_card` (exception state) | truthful representation of 5 datasource timeouts and 3 credential expiries, unknown/placeholder status for unprovided source, update time, impacted scope, and recovery status, proposed retry action, semantic consistency across conclusion, interactions, and sketch | claiming self-healing or automatic recovery; fabricating source, update time, or scope; escalating proposed retry into executed fact; hiding unverified "system auto-downgraded" or "task center archive" facts in the structure sketch or metadata while claiming unrecovered at the top |
+| Shared card read-only review window (Case B) | Read-only reconciliation review, typical duration 2-5 min, shared group card, multi-user audience | `progress_card` or `analysis_card` | processing/read-only review state, 2-5 min labeled as expected range rather than hard failure timeout, shared card semantics (unverified per-user isolation is not assumed), final reconciliation status kept conditional/pending | failing automatically at 5 min with retry trigger; treating review start or review success as final account settled/reconciled; writing "12 differences reconciled and balanced" in terminal state or declaring "reconciliation triggered by final action" in side_effect/actions when the task was explicitly read-only review; assuming unverified per-user private views on a shared card |
+| Long English notice without render (Case C) | Long English notification, localized/multilingual context, no client preview render available | `alert_card` or `digest_card` | default evidence status `pre_render_design`, localized multilingual typography design intent, mobile density and text wrap marked as `pending_real_render` (never `[x]`), validation checklist containing only applicable items | claiming visual acceptance without client render evidence; checking `[x]` on mobile density without render; rejecting design or blocking delivery solely because render evidence is absent |
+| Authoritative verified handoff (Case D) | Explicit authoritative deadline provided, actual reconciliation result available, verified JSON 2.0 delivery model | original scenario pattern matching verified inputs (e.g. `action_approval_card` or `ops_dashboard_card`) | fully adopting authoritative deadline and verified reconciliation result, assigning verified status matched strictly to verified scope (`checked` at design layer, conditional on implementation/rendering), preserving closed fact scope and field roles; explicit numeric/format derivations only | blanket rejection of authoritative inputs; marking explicitly provided facts as unknown; claiming full client visual acceptance beyond the verified scope; inventing owner/status/result/time/side effect, treating `update_time` as completion, or treating `completed` as passed/no outstanding items |
 
 ## Review Procedure
 
@@ -51,6 +55,10 @@ For each case, compare the output against expected pattern, key data, component 
 19. Check that authoring-path restrictions are explicit. JSON-only and visual-builder-only capabilities must not be transferred across authoring paths without a fallback.
 20. Check that `structure_sketch` is labeled as a design handoff component map only, not production-sendable Feishu JSON, and that it contains no JSON-looking envelope.
 21. Check that `design_red_lines` names the main failure modes for this scenario, not generic advice only.
+22. For Case A, verify that input facts (e.g. 5 datasource timeouts, 3 credential expiries) are not upgraded to self-healed, unprovided sources, update times, recovery status, or scopes remain unknown/placeholder, proposed actions are not described as executed, and structure sketches or metadata do not sneak in fabricated "auto-downgrade" or "archived" facts.
+23. For Case B, verify that read-only review periods (e.g. 2-5 min) are not turned into automatic failure timeouts, review progress is not conflated with final balanced accounts, terminal states and side effects do not exceed the original read-only semantics (never claim 12 differences reconciled or action-triggered balance adjustments), and shared cards do not assume unverified per-user personalization.
+24. For Case C, verify that unrendered cards default to `pre_render_design`, mobile density is marked as `pending_real_render` (never `checked`), the checklist outputs only applicable items using the selective template, and the skill does not block design by demanding mandatory screenshots.
+25. For Case D, verify that explicitly provided authoritative deadlines and verified review results are respected and used, with verification status strictly matching the proven scope; business people, states, results, times, and side effects come only from `provided_facts`; missing people use `<owner>`; `derived_facts` contains only explicit numeric/format derivations (for example, `12 - 2 = 10`, never "10 verified / no errors"); a date supplied only as Sep 21 does not gain a year; `update_time` is not completion; `completed` does not imply passed/no outstanding items; and owner/source/time/outcome references remain slots rather than value authorization.
 
 ## JSON 2.0 Hard Failures
 
@@ -90,3 +98,50 @@ Allowed occurrences of invalid names are limited to explicit warnings, negative 
 - Authoring-path restrictions are absent, so JSON-only components leak into visual-builder designs.
 - A valid component tag is treated as proof that all fields, nesting, or chart specs are valid.
 - The output claims to generate production-ready JSON, field-level schemas, callback contracts, or implementation code.
+- Input facts, assumptions, and proposed actions are conflated (e.g. timeouts self-heal, unverified update times or scopes are invented, proposed retries become completed transactions).
+- Sketch or metadata sneaks in fabricated facts (e.g. "auto-downgraded" or "archive center") even when top text acknowledges unrecovered status.
+- Shared read-only cards enforce hard timeout failures on estimated review durations, treat progress as settled accounts, write balance reconciliation into terminal state/side effects, or invent unverified per-user view logic.
+- Outputting the full candidate checklist unconditionally, providing subjective "self-checked" claims as evidence_scope, or marking unrendered visual items (like mobile density) as checked.
+- Blanket rejection of authoritative provided facts or claiming visual acceptance beyond the verified scope.
+- Facts escape their closed scope or field roles change: invented owner/status/result/time/side effect; inferred year for a partial date; `update_time` presented as completion; `completed` presented as passed or no outstanding items; arithmetic relabeled as a business verdict; or reference slots treated as permission to populate values.
+- A subtraction-derived value is labeled as "settled", "verified", "normal", or "no discrepancy" rather than its literal numeric meaning.
+- An unsupported persistence or notification claim such as "persisted to DB", "archived", "notified", "synced", "auto-refreshing", or "viewable anytime" is stated as fact.
+
+## Validation Checklist Candidate Reference
+
+When constructing the selective `validation_checklist` in the structured decision block, choose only items that apply to the current scenario. Do not output all candidate items.
+
+- [ ] first screen states the point
+- [ ] required key data for this data type is visible
+- [ ] operational analytics cards define the primary subject, reader first question, confidence, priority order, and supported next step when relevant
+- [ ] relative-position or contribution claims show the denominator/scope and use a valid comparison grain
+- [ ] key numbers include period, unit, and baseline when needed (only required when input provides them or they are explicitly known; do not fabricate)
+- [ ] chart_decision explains whether a chart is useful, which business question it answers, and why KPI/table is not enough or is better
+- [ ] recommended chart type matches the data shape and uses compatible grain, denominator, scope, unit, and series definitions
+- [ ] every chart remains conditional until `chart_spec`, component fields, client behavior, and real render are verified, with a non-chart fallback
+- [ ] number_emphasis_rules identify only decision-changing values for tag, bold, or inline color emphasis
+- [ ] positive/negative colors follow the metric's business direction, especially inverse metrics such as refund rate, defect rate, cost, latency, or risk count
+- [ ] feasibility check classifies official, conditional, conceptual-only, and unsupported/unverified capabilities
+- [ ] every implementation-facing component name is an official JSON 2.0 tag or a clearly labeled nested tag
+- [ ] conceptual names are mapped to real components and never presented as JSON tags
+- [ ] conditional components include authoring-path, client, resource, nesting, chart-spec, or interaction constraints and a fallback
+- [ ] no fields, enum values, Markdown extensions, HTML tags, or CSS-like properties are guessed
+- [ ] any implementation JSON uses schema 2.0 and body.elements; the design handoff itself remains a non-JSON component map
+- [ ] component choice matches the data shape
+- [ ] KPI and comparison-oriented column groups default to one shared weak neutral background with adequate padding and spacing
+- [ ] columns used only for label-value, button, form, or image-text alignment may remain backgroundless
+- [ ] sibling columns use different chromatic backgrounds only when they represent real semantic differences, with text or tags carrying the same meaning
+- [ ] tables are bounded or folded
+- [ ] any used status colors carry semantic meaning
+- [ ] inline text color is omitted unless local semantic emphasis is needed
+- [ ] actions, button layout, and disabled/accepted/processing/final states are clear
+- [ ] long-running actions separate accepted from completed, define truthful processing only when needed, and include complete terminal or needs-input states
+- [ ] repeated actions receive a visible stable state, and clarification selections are not described as already executed
+- [ ] side-effect boundaries and whether the reader may leave are clear when relevant
+- [ ] streaming cards use one primary streaming region, explicit exception states, and a stable final-result pattern when relevant
+- [ ] dynamic time defines its authority, timezone, display mode, visible precision, refresh policy, zero-boundary behavior, stale fallback, and action linkage when relevant
+- [ ] countdowns map to a static or repeatedly updated verified text region rather than an invented timer component, and text streaming is used only for progressive text
+- [ ] input/select/form controls have labels, defaults, validation, and empty/error states when used
+- [ ] source, period, owner, or audit fields are present when needed (keep as pending confirmation or omit when not provided; do not force fabrication)
+- [ ] mobile reading density is acceptable (mark as pending_real_render when corresponding real-client render evidence is unavailable; never mark checked)
+- [ ] real-client preview evidence is requested when rendering-dependent risk cannot be resolved from a structure sketch

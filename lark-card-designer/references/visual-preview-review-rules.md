@@ -49,7 +49,7 @@ Request only evidence needed for the design risk. Prefer:
 - notes about observed truncation, wrapping, overflow, fold behavior, image crop, click state, or update flicker
 - the design goal and previous preview version when comparison is requested
 
-Do not claim visual acceptance from JSON, source code, or a structure sketch alone. If no real render is available, label conclusions as pre-render design review and list the evidence still required.
+Do not claim visual acceptance from JSON, source code, or a structure sketch alone. If no real render is available, label conclusions as pre-render design review and list the evidence still required. Evidence status defaults to `pre_render_design`; label as `real_client_evidence` only when actual screenshots or recordings are provided (having render evidence does not imply all checks pass; checked covers only the proven scope).
 
 ## Sample Data Policy
 
@@ -142,12 +142,24 @@ Use one verdict:
 
 Preview acceptance covers only the reviewed design and evidence. It does not approve implementation correctness, API behavior, security, callbacks, deployment, or production release.
 
+## Evidence Status and Checklist Verification
+
+Distinguish the four verification states:
+
+- `checked` (`[x]`): verified at the design layer or confirmed by supplied evidence.
+- `pending_implementation`: requires host code, API, or component wiring to verify.
+- `pending_real_render`: requires real Feishu/Lark client screenshots or recordings to verify.
+- `not_applicable`: item does not apply to the current scenario; omit from the checklist.
+
+The validation checklist must output only applicable items. Every `[x]` requires corresponding design or rendering evidence; `checked` strictly reflects the specific scope backed by evidence and must not treat partial rendering evidence as a blanket pass for all checks. When corresponding real-client render evidence is unavailable, rendering-dependent checks such as mobile density must never be marked `[x]`; mark them as `pending_real_render`. Do not mandate screenshots for all cards, do not create approval walls, and never guess missing facts to satisfy a checklist field.
+
 ## Conditional Output Block
 
 Include this block only for real-client preview planning or review:
 
 ```markdown
 preview_review:
+- evidence_status: pre_render_design | real_client_evidence
 - preview_needed:
 - reason:
 - preview_version:

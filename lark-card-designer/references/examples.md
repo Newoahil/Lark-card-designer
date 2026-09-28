@@ -11,21 +11,21 @@ card_intent:
 - data_type: time series + KPI + action rows
 - intent: report and execute
 - audience: business operations
-- assumptions: default to operations because owner/action items are present
+- assumptions: default to operations because action items are present; include owner only when provided and relevant
 
 card_pattern:
 - name: ops_dashboard_card
-- why: needs KPI health, trend, anomaly, and owner actions
+- why: needs KPI health, trend, anomaly, and actions; include owner assignment only when provided and relevant
 
 information_architecture:
 - first_screen: period, overall status, 3 key conclusions, top risk
 - body: KPI group, trend evidence, bounded action table
 - details: raw project rows folded or linked
-- footer_or_note: source and update time
+- footer_or_note: include source and update time only when provided; otherwise omit this line or use an explicit placeholder
 
 chart_decision:
 - should_use_chart: conditional
-- business_question: whether weekly KPI movement is persistent enough to change owner priority
+- business_question: whether weekly KPI movement is persistent enough to change action priority; include owner priority only when provided and relevant
 - recommended_chart_type: compact trend chart if ordered weekly nodes are available
 - data_requirements: same metric definition, unit, scope, and weekly grain
 - why_not_table_or_kpi: KPI group states health; chart adds value only for persistence or volatility
@@ -53,7 +53,7 @@ component_plan:
 - content: markdown conclusion
 - data_display: KPI group maps to column_set + column + div; table is bounded to actionable rows
 - interactions: button only if view detail or refresh is a verified user action
-- metadata: notation-sized neutral div for source, period, and owner
+- metadata: notation-sized neutral div only for provided source, period, and owner; omit unavailable fields or use explicit placeholders
 
 design_constraints:
 - column_treatment: KPI sibling columns use one shared weak neutral background with modest padding and spacing; stack vertically on narrow screens
@@ -75,17 +75,17 @@ card_pattern:
 - why: product data needs metric health plus object-level action
 
 information_architecture:
-- first_screen: category/store, period, inventory or conversion risk
+- first_screen: category/store, inventory or conversion risk, and period only when provided; otherwise omit it or use an explicit placeholder
 - body: KPI group, Top/Bottom SKU, anomaly labels
 - details: bounded SKU table
-- footer_or_note: source table and update time
+- footer_or_note: include source table and update time only when provided; otherwise omit this line or use explicit placeholders
 
 chart_decision:
 - should_use_chart: no by default
 - business_question: which SKU needs action first
 - recommended_chart_type: none unless category-level trend or contribution is provided
 - data_requirements: ordered time nodes for trend, or explicit denominator for contribution
-- why_not_table_or_kpi: SKU rows need identity, status, decisive metric, and owner/action more than a decorative chart
+- why_not_table_or_kpi: SKU rows need identity, status, decisive metric, and action; include owner only when provided and relevant, rather than adding a decorative chart
 - fallback: Top/Bottom SKU table with status tags
 - implementation_verification_needed: chart_spec only if a trend/contribution chart is later added
 
@@ -129,7 +129,7 @@ information_architecture:
 - first_screen: target completion, forecast gap, key risk
 - body: trend evidence, stage composition, top risks
 - details: opportunity rows folded or linked
-- footer_or_note: CRM source, period, forecast assumptions
+- footer_or_note: include CRM source, period, and forecast assumptions only when provided; otherwise omit unavailable fields or use explicit placeholders
 
 chart_decision:
 - should_use_chart: conditional
@@ -173,10 +173,10 @@ card_pattern:
 - why: reader needs priority, summary, source, and feedback
 
 information_architecture:
-- first_screen: topic, collection period, must-read items
+- first_screen: topic, must-read items, and collection period only when provided; otherwise omit it or use an explicit placeholder
 - body: must-read, optional, and archive groups
 - details: related links folded or linked
-- footer_or_note: source count and collection time
+- footer_or_note: include source count and collection time only when provided; otherwise omit unavailable fields or use explicit placeholders
 
 chart_decision:
 - should_use_chart: no
@@ -224,10 +224,10 @@ card_pattern:
 - why: user must make an auditable decision
 
 information_architecture:
-- first_screen: object, applicant, amount, current state, deadline
+- first_screen: object, applicant, amount, current state, and deadline only when provided and relevant; otherwise omit unavailable fields or use explicit placeholders
 - body: reason, impact, risk, evidence
 - details: purchase details and history folded or linked
-- footer_or_note: audit fields
+- footer_or_note: include only provided audit fields; otherwise omit unavailable fields or use explicit placeholders
 
 chart_decision:
 - should_use_chart: no
@@ -261,7 +261,7 @@ interaction_rules:
 - acceptance_state: lock controls and state that the interaction was received
 - processing_state: show only when downstream work is genuinely asynchronous
 - terminal_states: approved, rejected, returned, cancelled, expired, failed, needs_input
-- audit_or_feedback: approver, time, comment
+- audit_or_feedback: include approver, time, and comment only when provided; otherwise omit unavailable fields or use explicit placeholders
 ```
 
 ## Time-Limited Approval
@@ -318,7 +318,7 @@ information_architecture:
 - first_screen: one-sentence conclusion, impact, baseline
 - body: comparison evidence, evidence rows, cause hypothesis
 - details: raw campaign data folded or linked
-- footer_or_note: data source and limitations
+- footer_or_note: include data source and limitations only when provided; otherwise omit unavailable fields or use explicit placeholders
 
 chart_decision:
 - should_use_chart: conditional
